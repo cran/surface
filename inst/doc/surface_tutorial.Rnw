@@ -1,0 +1,155 @@
+\documentclass[a4paper]{article}
+\usepackage[top=2cm,left=3cm,right=3cm]{geometry}
+
+\title{Introduction to the \texttt{surface} package}
+\author{Travis Ingram}
+\date{}
+
+% \VignetteIndexEntry{Introduction to surface}
+% \VignetteKeyword{comparative methods} 
+
+
+\begin{document}
+
+\maketitle
+
+This tutorial walks through the steps of a SURFACE analysis using a simple demonstration data set. 
+The main use of SURFACE is to construct a macroevolutionary adaptive landscape for a clade, given only a phylogenetic tree and measurements of one or more continuous traits for each member species. This is done by using  stepwise AIC algorithms to fit a series of `Hansen' models using \texttt{ouch} functions, with two distinct phases. 
+In the \emph{forward} phase, new selective regimes are added to the model, and in the \emph{backward} phase multiple regimes may be `collapsed' into convergent regimes discovered independently by different lineages. The final model provides an estimate of the macroevolutionary adaptive landscape, and can be compared to simulated data to evaluate whether the clade contains exceptional phenotypic convergence. 
+
+\vspace{0.25cm}
+The \texttt{surface} package can be installed locally from source files, and will soon be available for download from CRAN. Also required are the packages \texttt{ape}, \texttt{ouch}, \texttt{geiger}, \texttt{igraph} and \texttt{pmc}, and their dependencies. 
+\vspace{0.25cm}
+First, load the \texttt{surface} package along with its dependencies, then import the data object \texttt{surfaceDemo} contained in the package. This object consists of a 25-taxon tree in \texttt{phylo} format, and a simulated data set that includes measurements of three continuous traits for each species. 
+
+<<>>=
+library(surface)
+
+data(surfaceDemo)
+tree<-surfaceDemo$tree
+dat<-surfaceDemo$sim$dat
+@
+At this point, the \texttt{tree} and \texttt{dat} objects could be provided as input to the wrapper function \texttt{runSurface}, which carries out both phases of the analysis in a single step. Instead, let's look at the two steps separately to make the sequence of events clear. The function \texttt{nameNodes} ensures that each node in the tree has a unique label, for easier conversion between formats later (if nodes are already labeled, as is the case for the demo tree, the function returns the tree unchanged). \texttt{convertTreeData} converts the tree and data objects into a format ready for analysis with the \texttt{ouch} function \texttt{hansen}. 
+
+<<>>=
+tree<-nameNodes(tree)
+olist<-convertTreeData(tree,dat)
+otree<-olist[[1]]; odata<-olist[[2]]
+@
+
+The data set is now ready for analysis with SURFACE. We use the function \texttt{surfaceForward} to add one selective regimes at a time to the model, by repeatedly calling the function \texttt{addRegime}. By default, the starting model is a single-regime OU model, although one can optionally start an analysis with a model containing some regimes by specifying a \texttt{starting\_list}. 
+
+The default arguments should be suitable for many analyses, but one can specify options such as a different \texttt{aic\_threshold} for accepting model improvements, a limit to the \texttt{max\_steps} of the algorithm, whether to \texttt{sample\_shifts} within \texttt{sample\_threshold} AIC units of the best model rather than choosing the best model at each step, and whether to \texttt{exclude} a fraction of the worst candidate models from the previous step (see documentation for \texttt{surfaceForward} for more). By default progress is not printed out, but one can choose to print (fairly extensive) output to the console with \texttt{verbose=TRUE}, to view a visual representation of the change in AIC at each step in the graphics device with \texttt{plotaic=TRUE}, or to save the output to a file \texttt{filename} at each step to guard against crashes or exceeding run time limits using \texttt{save\_steps=TRUE}. This step should take a little under a minute, but can be quite long for larger data sets.
+
+\newpage
+<<>>=
+fwd<-surfaceForward(otree, odata, aic_threshold = 0, exclude = 0, 
+verbose = FALSE, plotaic = FALSE)
+k<-length(fwd)
+@
+The object returned by \texttt{surfaceForward}, which has been named \texttt{fwd}, is a list of length \texttt{k}, each element of which is another list containing the output of one call to \texttt{addRegime}. The object \texttt{fwd} is unwieldy to view all at once, but \texttt{surfaceSummary} can be used to retrieve information about the forward phase, such as the sequence of AIC values: 
+<<>>=
+fsum<-surfaceSummary(fwd)
+names(fsum)
+fsum$aics
+@
+\texttt{surfaceSummary} also returns the parameter estimates and regime placements from \texttt{fwd[[k]]}, the model returned from the forward phase of SURFACE, which is also the starting model for the backward phase. \texttt{surfaceBackward} repeatedly calls the function \texttt{collapseRegimes}, identifying cases where the same (or very similar) regimes are found independently on different branches of the tree, and where the model simplification obtained by collapsing them into single regimes results in a further improvement in the AIC. By default multiple regimes can be collapsed at each step if they are mutually compatible (see documentation), but will be limited to one collapse per step if the option \texttt{only\_best=TRUE} is specified. Other defaults and options are similar to the forward phase. This step will run in a few seconds, but the time taken increases quickly with the number of taxa and the number of regimes found in the forward phase. 
+
+<<>>=
+bwd<-surfaceBackward(otree, odata, starting_model = fwd[[k]], aic_threshold = 0, 
+only_best = FALSE, verbose = FALSE, plotaic = FALSE)
+bsum<-surfaceSummary(bwd)
+kk<-length(bwd)
+@
+\texttt{surfaceBackward} returns another list of lists, and again the final element (\texttt{bwd[[kk]]}) is generally the element of interest. \texttt{surfaceSummary} again summarizes the steps and final parameter values, and also displays measures of the extent of convergence in the data set (\texttt{deltak} and \texttt{c}). 
+<<>>=
+bsum$alpha
+bsum$sigma_squared
+bsum$theta
+bsum$n_regimes
+@
+
+\newpage
+The fitted SURFACE model can be visualized either as paintings of regimes on the tree, or as color-coded points in trait space. The first two traits are shown here, and by default \texttt{convcol = TRUE}, meaning convergent regimes are colorful and non-convergent regimes are grey or black.
+
+\begin{centering}
+<<fig=TRUE, width=6, height=6>>=
+surfaceTreePlot(tree, bwd[[kk]], labelshifts = T)
+@
+<<fig=TRUE, width=8, height=4>>=
+par(mfrow=c(1,2), mai=c(0.8,0.8,0.2,0.2))
+surfaceTraitPlot(dat, bwd[[kk]], whattraits = c(1,2))
+surfaceTraitPlot(dat, bwd[[kk]], whattraits = c(3,2))
+@
+\end{centering}
+
+\newpage
+Another way to visualize the results of the SURFACE analysis is with the sequence of AICc values from phase of the analysis. It may be interesting to compare this to the AICc of simpler models. The Brownian motion (BM) and single-regime OU (OU1) models can be fitted using \texttt{startingModel}, which calculates AICc by adding log-likelihoods across traits so they are comparable to the SURFACE AICc values. 
+<<>>=
+bm<-startingModel(otree,odata,brownian=TRUE)
+ou1<-startingModel(otree,odata)
+@
+\texttt{startingModel} can also be used to fit a Hansen model that includes specific shift placements. While the purpose of SURFACE is to avoid such \emph{a priori} information, it may be of interest to compare the model produced by SURFACE to other models, or to use SURFACE to add shifts while forcing certain other shifts to be present. To impose some regime shifts, one can build the desired model using \texttt{startingModel}, and supply this object to the \texttt{starting\_list} argument in \texttt{surfaceForward}. Here, we will simply fit a hypothetical alternative model `H12', which we will pretend is based on \emph{a priori} information about shifts into two habitats (H1 and H2). 
+<<>>=
+H12<-startingModel(otree,odata,shifts=c("26"="H1","13"="H1","5"="H2","19"="H2"))
+@
+Now, we can view the sequence of AICc values from the SURFACE run, and compare it to the values for the other models. 
+
+\begin{centering}
+<<fig=TRUE, width=4, height=4>>=
+surfaceAICPlot(fwd, bwd)
+abline(h=bm[[1]]$aic,lty="dashed")
+abline(h=ou1[[1]]$aic,lty="dashed")
+abline(h=H12[[1]]$aic,lty="dashed")
+text(c(6,6),c(bm[[1]]$aic, ou1[[1]]$aic, H12[[1]]$aic)-2,c("BM","OU1","H12"),cex=0.5) 
+@
+\end{centering}
+
+\newpage
+The function \texttt{propRegMatch} can be used to compare the fitted model to the `true', generating model based on the proportion of pairs of branches (either all branches or only taxa at the tip branches) that are correctly assigned to either the same regime or to different regimes.  In this simple case, SURFACE recovers the generating model perfectly, so both values are \texttt{1}.
+<<>>=
+truefit<-surfaceDemo$sim$fit
+propRegMatch(truefit, bwd[[kk]]$fit, internal = FALSE)  
+propRegMatch(truefit, bwd[[kk]]$fit, internal = TRUE)  
+@
+
+To compare the extent of convergence in a data set to a null expectation, data can be simulated under a model that lacks true convergence: either a simple stochastic model such as Brownian motion, or a Hansen model based on the fitted model from the forward phase;  with multiple evolutionary regime shifts to \emph{non-convergent} adaptive peaks. Either can be done using \texttt{surfaceSimulate}: the following code carries out one simulation under the Hansen null model (\texttt{set.seed} is used here only for reproducibility). 
+<<>>=
+set.seed(10)
+newsim<-surfaceSimulate(tree, type="hansen-fit", hansenfit=fwd[[k]]$fit, 
+shifts=fwd[[k]]$savedshifts, sample_optima=TRUE)
+@
+We can then visualize the simulated trait data; as there is no convergence in the true model, setting \texttt{convcol = FALSE} makes a more colorful figure. 
+\begin{center}
+<<fig=TRUE, width=8, height=4>>=
+par(mfrow=c(1,2),mai=c(0.8,0.8,0.2,0.2))
+surfaceTraitPlot(newsim$data, newsim, whattraits = c(1,2), convcol = FALSE)
+surfaceTraitPlot(newsim$data, newsim, whattraits = c(3,2), convcol = FALSE)
+@
+\end{center}
+
+We can then run SURFACE on the simulated data set, here doing the entire analysis in one step using \texttt{runSurface} (this should take less than a minute). We can then use \texttt{surfaceSummary} to extract the results, and compare the number of regime shifts (\texttt{k}) and the extent of convergence (\texttt{deltak} or \texttt{c}) to what we saw in the `real' data set. In this case, one instance of convergence is recovered in the simulated data set where two regimes were relatively close to one another in trait space; as we know that the regimes were nonetheless distinct from one another in the generating model, this represents `incidental' convergence. 
+
+\newpage
+<<>>=
+newout<-runSurface(tree, newsim$dat)
+newsum<-surfaceSummary(newout$bwd)
+newkk<-length(newout$bwd)
+newsum$n_regime
+bsum$n_regime
+@
+\begin{center}
+<<fig=TRUE, width=8, height=4>>=
+par(mfrow=c(1,2),mai=c(0.8,0.8,0.2,0.2))
+surfaceTraitPlot(newsim$data, newout$bwd[[newkk]], whattraits = c(1,2))
+surfaceTraitPlot(newsim$data, newout$bwd[[newkk]], whattraits = c(3,2))
+@
+\end{center}
+
+If we wanted to do a proper hypothesis test of whether the `real' data set contains more convergence than expected by chance, we would repeat the step of simulating data sets (with different random number seeds) many times, and running SURFACE on them to get a null distribution of \texttt{deltak} or \texttt{c}. We could calculate the statistical significance of such a test as the proportion of null values that meet or exceed the observed value (note that in a small data set like this statistical power is poor, but that statistical properties are much better given larger trees and at least two trait dimensions).
+
+This tutorial has given an overview of the uses of SURFACE; more information about the method is found in the documentation for each function, and in the manuscript (Ingram and Mahler, currently in revision for \emph{Meth. Ecol. Evol.} that introduces the method. 
+
+\end{document}
+
+
