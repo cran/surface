@@ -5,7 +5,7 @@
 Collapsing Convergent Regimes in a Hansen Model
 }
 \description{
-Carries out the backward phase of SURFACE's stepwise AIC routine. Beginning with a fitted Hansen model produced by \code{surfaceForward}, tests pairwise collapses of regimes and identifies collapses that most improve the fit. Continues this iterative process until the model stops improving beyond the given AIC threshold
+Carries out the backward phase of SURFACE's stepwise AIC routine. Beginning with a fitted Hansen model produced by \code{surfaceForward}, tests pairwise collapses of regimes and identifies collapses that improve the fit. Continues this iterative process until the model stops improving beyond the given AIC threshold
 }
 \usage{
 surfaceBackward(otree, odata, starting_model, aic_threshold = 0, max_steps = NULL, save_steps = FALSE, filename = "temp_back_list.R", verbose = FALSE, only_best = FALSE, plotaic = FALSE, error_skip = FALSE, sample_shifts = FALSE, sample_threshold = 2)
@@ -22,10 +22,10 @@ Data frame with rownames corresponding to \code{otree@labels}
 The Hansen model to attempt regime collapses on; typically the final element of a \code{surfaceForward} analysis
 }
   \item{aic_threshold}{
-Positive scalar specifying the magnitude of AICc improvement needed to accept a shift (defaults to zero, meaning any improvement in the AICc will be accepted)
+Change in AICc needed to accept a candidate model as a sufficient improvement over the previous iteration of SURFACE. Defaults to zero, meaning any improvement in the AICc will be accepted; more stringent thresholds are specified using *negative* values of \code{aic_threshold}
 }
   \item{max_steps}{
-Maximum number of iterations of the stepwise routine
+Maximum number of steps in the backward phase to carry out (assuming the model improvement continues to exceed \code{aic_threshold})
 }
   \item{save_steps}{
 A logical indicating whether to save the current iteration of the model at each step (overwriting if necessary) to a file \code{filename} (defaults to \code{FALSE})
@@ -74,7 +74,7 @@ Can be time-consuming, as the number of likelihood searches at a step is \code{k
 \references{
 Butler, M.A. & King, A.A. (2004) Phylogenetic comparative analysis: a modeling approach for adaptive evolution. American Naturalist 164: 683-695.
 
-Ingram, T. & Mahler, D.L. in revision, Methods in Ecology and Evolution. 
+Ingram, T. & Mahler, D.L. (2013) SURFACE: detecting convergent evolution from comparative data by fitting Ornstein-Uhlenbeck models with stepwise AIC. Methods in Ecology and Evolution, in press. 
 }
 \author{
 Travis Ingram

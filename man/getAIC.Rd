@@ -2,10 +2,10 @@
 \alias{getAIC}
 \alias{npSurface}
 \title{
-Akaike's Information Criterion for SURFACE
+Akaike's Information Criterion for SURFACE Models
 }
 \description{
-Calculates AIC or AICc values, using the number of parameters as defined for Hansen models in SURFACE.
+Calculates AIC or AICc values, using the number of parameters as defined for Hansen models in SURFACE
 }
 \usage{
 getAIC(L, np, n, AICc = TRUE)
@@ -25,18 +25,17 @@ Number of parameters in the model
 Sample size (total number of trait values)
 }
   \item{AICc}{
-A logical indicating whether to use small-sample size corrected AIC (recommended, defaults to \code{TRUE})
+A logical indicating whether to use small-sample size corrected AIC; defaults to \code{TRUE}, and is set to \code{TRUE} during all calls within the \code{surface} functions
 }
 }
 \details{
-Number of parameters is calculated as p = k + (k' + 2) m, where k is the number of regime shifts, k' is the number of distinct regimes, and m is the number of traits. For AICc, the sample size is taken to be the total number of trait values mn, where n is the number of taxa
+The number of parameters is calculated as p = k + (k' + 2) m, where k is the number of regime shifts, k' is the number of distinct regimes, and m is the number of traits. Note that this differs from many applications of Hansen models, in that SURFACE counts regime shifts as "parameters", modeling the complexity of both the adaptive landscape (number of regimes) and the evolutionary history of the clade (number of regime shifts). For AICc, the sample size is taken to be the total number of trait values mn, where n is the number of taxa
 }
 \value{
-\code{npSurface} returns an integer number of parameters
-\code{getAIC} returns a numeric AIC or AICc value
+\code{npSurface} returns an integer number of parameters. \code{getAIC} returns a numeric AIC or AICc value
 }
 \references{
-Ingram, T. & Mahler, D.L. in revision, Methods in Ecology and Evolution. 
+Ingram, T. & Mahler, D.L. (2013) SURFACE: detecting convergent evolution from comparative data by fitting Ornstein-Uhlenbeck models with stepwise AIC. Methods in Ecology and Evolution, in press. 
 }
 \author{
 Travis Ingram

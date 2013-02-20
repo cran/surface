@@ -1,7 +1,9 @@
 surfaceSimulate <-
-function(phy,type="BM",param=0,n_traits=NULL,dat=NULL,vcv=NULL,hansenfit=NULL, shifts=NULL,n_shifts=NULL, n_conv_shifts=NULL,n_regimes=NULL,no_nested=TRUE, optima=NULL,  sample_optima=TRUE, optima_distrib=NULL, optima_type="rnorm", sigma_squared=NULL, alpha=NULL, pshift_timefactor=NULL){
+function(phy,type="BM",param=0,n_traits=NULL,dat=NULL,vcv=NULL,hansenfit=NULL, shifts=NULL,n_shifts=NULL,n_conv_shifts=NULL, n_regimes=NULL,n_per_regime=NULL,no_nested=TRUE, optima=NULL,  sample_optima=TRUE, optima_distrib=NULL, optima_type="rnorm", sigma_squared=NULL, alpha=NULL, pshift_timefactor=NULL){
 
 if(type%in%c("BM","hansen-paint","hansen-fit")==F)stop("`type` must be `BM`, `hansen-paint` or `hansen-fit`")
+
+ntaxa<-ifelse(class(phy)=="phylo",length(phy$tip.label),phy@nterm)
 
 if(type=="BM"){
 	
@@ -93,27 +95,37 @@ Letters<-c(letters,paste("z",letters,sep=""),paste("zz",letters,sep=""),paste("z
 
 if(!is.null(dat))n_traits<-dim(dat)[2]
 if(is.null(n_traits))n_traits<-1
-if(is.null(dat))dat<-as.data.frame(matrix(rnorm(n_traits*length(phy$tip.label)),ncol=n_traits,dimnames=list(phy$tip.label,NULL)))
 
+if(class(phy)%in%c("phylo","ouchtree")==FALSE)stop("`phy` must either be a `phylo` object or an `ouchtree` object")
 if(class(phy)=="phylo"){
+	if(is.null(dat))dat<-as.data.frame(matrix(rnorm(n_traits*ntaxa),ncol=n_traits,dimnames=list(phy$tip.label,NULL)))
 	olist<-convertTreeData(phy,dat) 
 	otree<-olist[[1]];odata<-olist[[2]]
 	if(!is.null(shifts))warning("`phy` converted to `ouchtree` object: `shifts` provided must correspond to `@nodes` in this format",call.=FALSE)
-	}
+	}else{
+	otree<-phy
+	odata<-as.data.frame(matrix(rnorm(n_traits*otree@nnodes),ncol=n_traits,dimnames=list(as(otree,"data.frame")$nodes,NULL)))
+	odata[-otree@term,]<-NA
+}
 
-if(!is.null(shifts)){
+if(!is.null(shifts)){ #if shifts and branches specified, no sampling involved
 	n_regimes<-length(unique(shifts))
 }else{
-	if(is.null(n_shifts)){
+if(!is.null(n_per_regime)){  #if provided, n_shifts & n_regimes known
+	n_shifts<-sum(n_per_regime)   
+	n_regimes<-length(n_per_regime)
+	}
+	if(is.null(n_shifts)|n_shifts==1){    	#if n_shifts=1 (default), placed ancestrally and no sampling involved
 		n_shifts<-1
 		shifts<-c("1"="a")
 	}else{
 		shifts<-character(n_shifts)
-	if(is.null(n_conv_shifts)&is.null(n_regimes)){
+	if(is.null(n_conv_shifts)&is.null(n_regimes)&is.null(n_per_regime)){  #no convergence specified
 		n_per_regime<-rep(1,n_shifts)
 		shifts[]<-Letters[1:length(shifts)]
 	}else{
-		if(!is.null(n_conv_shifts)&!is.null(n_regimes))stop("provide either `n_conv_shifts` or `n_regimes`; by default `n_conv_shifts` is used")
+		if(is.null(n_per_regime)){   #if don't need to sample shifts per regime, skip to building shifts
+		if(!is.null(n_conv_shifts)&!is.null(n_regimes))stop("provide only one of `n_conv_shifts` or `n_regimes`")
 		if(!is.null(n_regimes)){
 			n_conv_regimes<-sample(min(1,n_shifts-n_regimes):min(floor(n_regimes/2),n_shifts-n_regimes),1)
 			if(n_conv_regimes>0){
@@ -128,8 +140,11 @@ if(!is.null(shifts)){
 			n_per_regime<-c(rep(1,n_shifts-n_conv_shifts),2+as.numeric(rmultinom(1,n_conv_shifts-2*n_conv_regimes,prob=rep(1,n_conv_regimes))))
 			n_regimes<-length(n_per_regime)
 		}
+	}
 	shifts[]<-c("a",sample(rep(Letters[2:length(n_per_regime)],times=n_per_regime[-1])))
-		
+	}	#moved this close brace here - was after the shift sampling step...
+
+	
 if(is.null(pshift_timefactor))pshift_timefactor<-1
 brtimes<-getBranchTimes(otree)
 probshift<-1+brtimes*(pshift_timefactor-1)/max(as(otree,"data.frame")$times)
@@ -141,12 +156,13 @@ while(1){
 		checknodes[i]<-any(names(shifts[which(shifts==shifts[i])])%in%ouchDescendants(names(shifts)[i],otree))
 	}
 if(sum(checknodes)==0|no_nested==FALSE)break
-		}	}
+		}	#one too many '}'s here - skipped sampling if is.null(n_regimes)&is.null(n_conv_shifts)???
 }	}
 
 regs<-repaint(otree,regshifts=shifts)
-
 tempfit<-apply(odata,2,function(x)hansen(x,otree,regimes=regs,sqrt.alpha=0.2,sigma=1))
+
+
 
 if(!is.null(alpha)){
 	if(length(alpha)==1&n_traits>1)alpha<-rep(alpha,n_traits)
@@ -176,8 +192,14 @@ for(i in 1:length(tempfit))tempfit[[i]]@theta$x[]<-optima[,i]
 
 if(type%in%c("hansen-paint","hansen-fit")){
 	simdat<-as.data.frame(matrix(unlist(sapply(tempfit,simulate)),ncol=n_traits))
-	simdat<-simdat[match(phy$tip.label,as(otree,"data.frame")$labels),,drop=F]
-	rownames(simdat)<-phy$tip.label
+	#added this switch so ouchtree or phylo trees could both be used
+#	if(class(phy)=="ouchtree"){
+#		rownames(simdat)<-as(otree,"data.frame")$labels[
+#	}else{
+	if(class(phy)=="phylo"){
+		simdat<-simdat[match(phy$tip.label,as(otree,"data.frame")$labels),,drop=F]
+		rownames(simdat)<-phy$tip.label
+	}
 	names(simdat)<-paste("V",1:n_traits,sep="")
 	shifttimes<-getBranchTimes(tempfit[[1]])[as.numeric(names(shifts))]
 	tip_regimes<-as(tempfit[[1]],"data.frame")

@@ -1,20 +1,20 @@
 \name{pmcSurface}
 \alias{pmcSurface}
 \title{
-Phylogenetic Monte Carlo for SURFACE models
+Phylogenetic Monte Carlo for SURFACE Models
 }
 \description{
-Modifies the \code{pmc} routine (Boettiger et al. 2012) for testing statistical significance and esimating power for a comparison of two comparative models. 
+Modifies the \code{pmc} routine (Boettiger et al. 2012) for testing statistical significance and estimating power for a comparison of two comparative models 
 }
 \usage{
 pmcSurface(model1, model2, otree, odata, nboot = 20, prob = 0.95)
 }
 \arguments{
   \item{model1}{
-Hansen model from an earlier step of either the forward or backward phase of SURFACE
+A Hansen model from one step of either the forward or backward phase of SURFACE
 }
   \item{model2}{
-Hansen model from the next step of either the forward or backward phase of SURFACE
+Another Hansen model, generally from the next step of either the forward or backward phase of SURFACE
 }
   \item{otree}{
 Phylogenetic tree in \code{ouchtree} format
@@ -45,7 +45,7 @@ A list with the following components:
 \references{
 Boettiger, C., Coop, G. & Ralph, P. (2012) Is your phylogeny informative? Measuring the power of comparative methods. Evolution 66: 2240-2251.
 
-Ingram, T. & Mahler, D.L. in revision, Methods in Ecology and Evolution. 
+Ingram, T. & Mahler, D.L. (2013) SURFACE: detecting convergent evolution from comparative data by fitting Ornstein-Uhlenbeck models with stepwise AIC. Methods in Ecology and Evolution, in press. 
 }
 \author{
 Travis Ingram

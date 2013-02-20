@@ -4,7 +4,7 @@
 Similarity of Two Hansen Models
 }
 \description{
-Calculates the pairwise matching between two alternate paintings of the same phylogenetic tree. This is done by creating a half-matrix for each \code{hansentree} object indicating whether each pairwise comparison of tip species or branches shows they are in the same regime (coded `1') or different regimes (coded `0'). The `proportion matching' value returned is the proportion of elements of the two matrices that are equal; a rough measure of correspondence between two Hansen models (one of which may be the `true', generating model)
+Calculates the pairwise matching between two alternate paintings of the same phylogenetic tree. This is done by creating a half-matrix for each \code{hansentree} object indicating whether each pairwise comparison of tip species or branches shows they are in the same regime (coded `1') or different regimes (coded `0'). The `proportion matching' value returned is the proportion of elements of the two matrices that are equal; a measure of correspondence between two Hansen models (one of which may be the `true' model if data are simulated)
 }
 \usage{
 propRegMatch(fit1, fit2, internal = FALSE)
@@ -27,7 +27,7 @@ A logical indicating whether internal branches should be included in the calcula
 A single value quantifying the proportion of pairwise regime comparisons that are the same between the two models
 }
 \references{
-Ingram, T. & Mahler, D.L. in revision, Methods in Ecology and Evolution. 
+Ingram, T. & Mahler, D.L. (2013) SURFACE: detecting convergent evolution from comparative data by fitting Ornstein-Uhlenbeck models with stepwise AIC. Methods in Ecology and Evolution, in press. 
 }
 \author{
 Travis Ingram

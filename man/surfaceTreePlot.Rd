@@ -1,17 +1,15 @@
 \name{surfaceTreePlot}
 \alias{surfaceTreePlot}
 \alias{surfaceTraitPlot}
-\alias{surfaceAICPlot}
 \title{
-Plot a the results of a SURFACE analysis
+Visualize Results of a SURFACE Analysis
 }
 \description{
-Plotting functions to visualize the results of a SURFACE analysis: \code{surfaceTreePlot} produces a customized \code{plot.phylo} figure; \code{surfaceTraitPlot} produces a scatterplot of species' traits, each with colors representing regimes; and \code{surfaceAICPlot} produces a line plot showing the sequence of AICc values over an entire SURFACE analysis
+Plotting functions to visualize the results of a SURFACE analysis, with colors depicting regime structure: \code{surfaceTreePlot} produces a customized \code{plot.phylo} figure, and \code{surfaceTraitPlot} produces a scatterplot of trait values and optima
 }
 \usage{
 surfaceTreePlot(tree, hansenfit, cols = NULL, convcol = TRUE, labelshifts = FALSE, ...)
-surfaceTraitPlot(dat, hansenfit, whattraits = c(1, 2), cols = NULL, convcol = TRUE, pchs = c(21,21), cex.opt = 2.5, ...)
-surfaceAICPlot(fwd, bwd, ...)
+surfaceTraitPlot(dat, hansenfit, whattraits = c(1, 2), cols = NULL, convcol = TRUE, pchs = c(21,21), cex.opt = 2.5, optellipses = FALSE, ellipsescale = 1, y.lim = NULL, x.lim = NULL, y.lab = NULL, x.lab = NULL, ...)
 }
 \arguments{
   \item{tree}{
@@ -23,14 +21,8 @@ Trait data formatted as a data frame with named rows and at least two columns
   \item{hansenfit}{
 An object containing the fitted Hansen model to use in plotting, with elements \code{fit} and \code{savedshifts}. This may be the list produced by any one iteration of \code{surfaceForward} or \code{surfaceBackward}, or the list produced by \code{surfaceSimulate}
 }
-  \item{fwd}{
-List resulting from a \code{surfaceForward} run
-}
-  \item{bwd}{
-List resulting from a \code{surfaceBackward} run
-}
   \item{whattraits}{
-A two-element vector indicating which traits to use for the (x,y) axes of a trait plot (defaults to \code{c(1,2)} )
+A two-element integer (or a single integer; see Details) indicating which traits to use for the (x,y) axes of a trait plot (defaults to \code{c(1,2)})
 }
   \item{cols}{
 An optional character vector of colors for painting branches in \code{surfaceTreePlot} or coloring symbols in \code{surfaceTraitPlot}. One color should be provided per regime in \code{hansenfit}; if \code{cols=NULL} the function will attempt an appropriate default 
@@ -47,28 +39,43 @@ Optional two-element vector of plotting characters for trait values and optima i
   \item{cex.opt}{
 Character expansion for symbols representing the optima in \code{surfaceTraitPlot}; defaults to 2.5 (symbols representing data points can be specified with \code{cex})
 }
+  \item{optellipses}{
+A logical indicating whether to draw ellipses based on the fitted OU model instead of denoting optimum positions with \code{pchs} and \code{cex.opt}. The ellipses are drawn as the optima +/- the standard deviation of the stationary distribution of the inferred OU process: sqrt(log(2)/alpha), multiplied by \code{ellipsescale}
+}
+  \item{ellipsescale}{
+A scalar or vector indicating how many standard deviations to draw ellipses above and below the optima; if a vector, concentric ellipses of various sizes will be drawn; defaults to 1
+}
+  \item{y.lim}{
+Lower and upper limits for the y-axis; by default will be calculated to fit all points and ellipses fit in the frame
+}
+  \item{x.lim}{
+Lower and upper limits for the x-axis; by default will be calculated to fit all points and ellipses fit in the frame
+}
+  \item{y.lab}{
+y-axis label; defaults to the column name in the data frame
+}
+  \item{x.lab}{
+x-axis label; defaults to the column name in the data frame
+}
   \item{\dots}{
 Additional arguments to be passed to the \code{plot} or \code{points} functions
 }
 }
-%\details{
-%%  ~~ If necessary, more details than the description above ~~
-%}
+\details{
+For trait plots using the option \code{optellipses=TRUE}, note that in some cases (e.g. if alpha is very small) the ellipses will not convey useful information. If trait data are unidimensional, or if \code{whattraits} is provided as a single integer, data will be plotted on the x-axis and the y-axis will separate different regimes (and ellipse width in the y-dimension will not be meaningful)
+}
 \value{
 Creates one tree or trait plot on the current graphics device
 }
 \references{
-Ingram, T. & Mahler, D.L. in revision, Methods in Ecology and Evolution. 
+Ingram, T. & Mahler, D.L. (2013) SURFACE: detecting convergent evolution from comparative data by fitting Ornstein-Uhlenbeck models with stepwise AIC. Methods in Ecology and Evolution, in press. 
 }
 \author{
 Travis Ingram
 }
-%\note{
-%%  ~~further notes~~
-%}
 
 \seealso{
-\code{\link{surfaceForward}}, \code{\link{surfaceBackward}}, \code{\link{surfaceSimulate}}, \code{\link{surfaceSummary}}
+\code{\link{surfaceForward}}, \code{\link{surfaceBackward}}, \code{\link{surfaceSimulate}}, \code{\link{surfaceSummary}}, code{\link{surfaceAICPlot}}
 }
 
 \keyword{hplot}

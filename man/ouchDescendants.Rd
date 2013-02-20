@@ -1,10 +1,10 @@
 \name{ouchDescendants}
 \alias{ouchDescendants}
 \title{
-Obtain Descendants in an \code{ouch} tree
+Obtain Descendants from an \code{ouch} Tree
 }
 \description{
-Identifies the nodes and tip taxa descended from a given ancestor in an \code{ouchtree} or \code{hansentree} object. Used to test whether two `convergent' regimes are actually nested when generating a Hansen model for simulations
+Identifies the nodes and tip taxa descended from a given ancestor in an \code{ouchtree} or \code{hansentree} object. Used to test whether two `convergent' regimes are actually nested when randomly placing regime shifts in a Hansen model in the function \code{surfaceSimulate}
 }
 \usage{
 ouchDescendants(node, otree)
@@ -21,10 +21,10 @@ An \code{ouchtree} object
 %%  ~~ If necessary, more details than the description above ~~
 %}
 \value{
-A vector of integers corresponding to the descendents (integers match the \code{@nodes} element of the \code{ouchtree}
+A vector of integers corresponding to the descendents (integers match the \code{@nodes} element of the \code{ouchtree})
 }
 \references{
-Ingram, T. & Mahler, D.L. in revision, Methods in Ecology and Evolution. 
+Ingram, T. & Mahler, D.L. (2013) SURFACE: detecting convergent evolution from comparative data by fitting Ornstein-Uhlenbeck models with stepwise AIC. Methods in Ecology and Evolution, in press. 
 }
 \author{
 Travis Ingram

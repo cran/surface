@@ -1,7 +1,8 @@
 collapseRegimes <-
 function(otree, odata, oldshifts, oldaic, oldfit, aic_threshold=0, only_best=FALSE, verbose=TRUE, plotaic=TRUE, error_skip=FALSE, sample_shifts=FALSE, sample_threshold=2){
 	
-if(only_best==FALSE)require(igraph)
+if(only_best==FALSE) if(!require(igraph)) stop("The 'igraph' package must be loaded to use the option 'only_best=FALSE'")
+
 	n<-otree@nterm;nt<-dim(odata)[2]
 	oldalphas<-sapply(oldfit,function(x)summary(x)$alpha)
 	oldsigmas<-sapply(oldfit,function(x)summary(x)$sigma)
@@ -43,13 +44,13 @@ for(i in 1:kk){
 
 newshifts<-oldshifts;best_aic<-oldaic;nreg<-kk;fit<-oldfit
 
-if(any((aics$daic<aic_threshold))){
+if(any((aics$daic<(aic_threshold)))){
 
-	df<-aics[which(aics$daic<aic_threshold),]
+	df<-aics[which(aics$daic<(aic_threshold)),]
 if(only_best==TRUE | dim(df)[1]==1){
 	z<-which.min(df$daic)
-	if(sample_shifts){
-		candidates<-which(df$daic-min(df$daic,na.rm=TRUE)<=sample_threshold)
+	if(sample_shifts&df$daic[z]<(aic_threshold)){
+		candidates<-which((df$daic-min(df$daic,na.rm=TRUE))<=sample_threshold&df$daic<(aic_threshold))
 		if(verbose)print(paste("sampling 1 of",length(candidates), "models within",sample_threshold,"units of best AICc")) 
 		if(length(candidates)>1)z<-sample(candidates,1)
 	}

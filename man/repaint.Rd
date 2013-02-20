@@ -17,7 +17,7 @@ Phylogenetic tree in \code{ouchtree} format
 Named character vector of regime shifts
 }
   \item{stem}{
-A logical indicating whether the painting of a clade should include the stem branch (recommended; defaults to \code{TRUE})
+A logical indicating whether the painting of a clade should include the stem branch; defaults to \code{TRUE}, and is set to \code{TRUE} during all calls within the \code{surface} functions
 }
 }
 %\details{
@@ -29,7 +29,7 @@ A named character vector of regime assignments for each branch, as returned by \
 \references{
 Butler, M.A. & King, A.A. (2004) Phylogenetic comparative analysis: a modeling approach for adaptive evolution. American Naturalist 164: 683-695.
 
-Ingram, T. & Mahler, D.L. in revision, Methods in Ecology and Evolution. 
+Ingram, T. & Mahler, D.L. (2013) SURFACE: detecting convergent evolution from comparative data by fitting Ornstein-Uhlenbeck models with stepwise AIC. Methods in Ecology and Evolution, in press. 
 }
 \author{
 Travis Ingram

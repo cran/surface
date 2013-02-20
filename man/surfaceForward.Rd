@@ -5,7 +5,7 @@
 Adding Regimes to a Hansen Model
 }
 \description{
-Carries out the forward phase of SURFACE's stepwise AIC routine to add regime shifts to a Hansen model. \code{addRegime} performs one step of this analysis, and is called by \code{surfaceForward}. At each step, tests the delta-AICc of each possible shift placement (i.e. branch), and returns an updated Hansen model with a shift added. Continues this iterative process until the model stops improving beyond a given threshold.
+Carries out the forward phase of SURFACE's stepwise AIC routine, adding regime shifts to a Hansen model. \code{addRegime} performs one step of this analysis, and is called repeatedly by \code{surfaceForward}. At each step, the delta-AICc of each possible shift placement (i.e. branch) is calculated, and an updated Hansen model is returned with one shift added. This process is iterated until the model stops improving beyond a threshold delta-AICc
 }
 \usage{
 surfaceForward(otree, odata, starting_list=NULL, starting_shifts=NULL, exclude=0,  aic_threshold=0, max_steps=NULL, save_steps=FALSE, filename="temp_out_list.R", verbose=FALSE, plotaic=FALSE, error_skip=FALSE, sample_shifts=FALSE, sample_threshold=2)
@@ -19,22 +19,22 @@ Phylogenetic tree in \code{ouchtree} format
 Data frame with rownames corresponding to \code{otree@labels}
 }
   \item{starting_list}{
-An optional list which may containing either a partially completed analysis (which can be built upon instead of starting over), or a custom starting model that includes some pre-specified shifts, which can be created using \code{startingModel}
+An optional list which may containing either a partially completed analysis (which can be built upon instead of starting over), or a custom starting model created with \code{startingModel}, which may include some pre-specified shifts 
 }
   \item{starting_shifts}{
 An optional named character vector of shifts that are required to be in the Hansen model, which will be passed to \code{startingModel} when the initial model is built 
 }
   \item{exclude}{
-Optionally, the proportion of the worst models (AICc scores for each shift point) to exclude in the current round (defaults to zero)
+Optionally, the proportion of the worst models (AICc scores for each shift point) to exclude in the current round (defaults to zero; values greater than 0.5 are not recommended)
 }
   \item{aic_threshold}{
-Positive scalar specifying the magnitude of AICc improvement needed to accept a shift (defaults to zero, meaning any improvement in the AICc will be accepted)
+Change in AICc needed to accept a candidate model as a sufficient improvement over the previous iteration of SURFACE. Defaults to zero, meaning any improvement in the AICc will be accepted; more stringent thresholds are specified using *negative* values of \code{aic_threshold}
 }
   \item{max_steps}{
-Maximum number of regimes to allow to be added (assuming the model improvement continues to exceed \code{aic_threshold}
+Maximum number of regimes to allow to be added (assuming the model improvement continues to exceed \code{aic_threshold})
 }
   \item{save_steps}{
-A logical indicating whether to save the current iteration of the model at each step (overwriting if necessary) to a file \code{filename} (defaults to \code{FALSE})
+A logical indicating whether to save the current iteration of the model at each step (overwriting previous iterations) to a file \code{filename} (defaults to \code{FALSE})
 }
   \item{filename}{
 Name of the file to save progress to at each step, if \code{savesteps=TRUE}
@@ -81,7 +81,7 @@ Can be time-consuming, as many likelihood searches are carried out at each itera
 \references{
 Butler, M.A. & King, A.A. (2004) Phylogenetic comparative analysis: a modeling approach for adaptive evolution. American Naturalist 164: 683-695.
 
-Ingram, T. & Mahler, D.L. in revision, Methods in Ecology and Evolution. 
+Ingram, T. & Mahler, D.L. (2013) SURFACE: detecting convergent evolution from comparative data by fitting Ornstein-Uhlenbeck models with stepwise AIC. Methods in Ecology and Evolution, in press. 
 }
 \author{
 Travis Ingram

@@ -1,7 +1,7 @@
 \name{getBranchTimes}
 \alias{getBranchTimes}
 \title{
-Extract branching times for nodes in an \code{ouch} tree
+Extract Branching Times from an \code{ouch} Tree
 }
 \description{
 Extracts the time from root of each node in an \code{ouchtree} or \code{hansentree} formatted phylogenetic tree; used to compute the timing of regime shifts in a Hansen model
@@ -21,7 +21,7 @@ Fitted \code{ouchtree} or \code{hansentree} object
 A vector of branching times
 }
 \references{
-Ingram, T. & Mahler, D.L. in revision, Methods in Ecology and Evolution. 
+Ingram, T. & Mahler, D.L. (2013) SURFACE: detecting convergent evolution from comparative data by fitting Ornstein-Uhlenbeck models with stepwise AIC. Methods in Ecology and Evolution, in press. 
 }
 \author{
 Travis Ingram

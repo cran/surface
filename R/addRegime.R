@@ -56,8 +56,8 @@ for(i in 2:length(nodes)){
 		}
 	}
 	best<-names(sort(aics))[1]
-	if(sample_shifts){
-		candidates<-aics[which(aics-min(aics,na.rm=TRUE)<=sample_threshold)]
+	if(sample_shifts&(aics[best]-oldaic)<(aic_threshold)){
+		candidates<-aics[which((aics-min(aics,na.rm=TRUE))<=sample_threshold&(aics-oldaic)<(aic_threshold))]
 		if(verbose)print(paste("sampling 1 of",length(candidates), "models within",sample_threshold,"units of best AICc")) 
 		if(length(candidates)>1)best<-names(sample(candidates,1))
 	}
@@ -70,6 +70,6 @@ for(i in 2:length(nodes)){
 	if(verbose){
 		print(paste("old AIC =",round(oldaic,2)),quote=F)
 		print(paste("new AIC =",round(as.numeric(aics[best]),2)),quote=F)
-		if((aics[best]-oldaic)>=aic_threshold)print(paste("adding regime shift at node",names(aics[best])),quote=F)
+		if((aics[best]-oldaic)<(aic_threshold))print(paste("adding regime shift at node",names(aics[best])),quote=F)
 		}
 return(list(fit=fits[[as.numeric(best)]],all_aic=aics,aic=aics[best],savedshifts=newshifts,n_regimes=n_regimes))	}

@@ -18,9 +18,7 @@ The main use of SURFACE is to construct a macroevolutionary adaptive landscape f
 In the \emph{forward} phase, new selective regimes are added to the model, and in the \emph{backward} phase multiple regimes may be `collapsed' into convergent regimes discovered independently by different lineages. The final model provides an estimate of the macroevolutionary adaptive landscape, and can be compared to simulated data to evaluate whether the clade contains exceptional phenotypic convergence. 
 
 \vspace{0.25cm}
-The \texttt{surface} package can be installed locally from source files, and will soon be available for download from CRAN. Also required are the packages \texttt{ape}, \texttt{ouch}, \texttt{geiger}, \texttt{igraph} and \texttt{pmc}, and their dependencies. 
-\vspace{0.25cm}
-First, load the \texttt{surface} package along with its dependencies, then import the data object \texttt{surfaceDemo} contained in the package. This object consists of a 25-taxon tree in \texttt{phylo} format, and a simulated data set that includes measurements of three continuous traits for each species. 
+The \texttt{surface} package can be downloaded from CRAN (\texttt{http://cran.r-project.org/web/packages/surface/}). Also required are the packages \texttt{ape}, \texttt{ouch}, \texttt{geiger} and \texttt{igraph} and their dependencies. First, load the \texttt{surface} package along with its dependencies, then import the data object \texttt{surfaceDemo} contained in the package. This object consists of a 25-taxon tree in \texttt{phylo} format, and a simulated data set that includes measurements of three continuous traits for each species. 
 
 <<>>=
 library(surface)
@@ -70,7 +68,7 @@ bsum$n_regimes
 @
 
 \newpage
-The fitted SURFACE model can be visualized either as paintings of regimes on the tree, or as color-coded points in trait space. The first two traits are shown here, and by default \texttt{convcol = TRUE}, meaning convergent regimes are colorful and non-convergent regimes are grey or black.
+The fitted SURFACE model can be visualized either as paintings of regimes on the tree, or as color-coded points in trait space. Colors can be generated automatically, and by default \texttt{convcol = TRUE}, meaning convergent regimes are colorful and non-convergent regimes are grey or black. 
 
 \begin{centering}
 <<fig=TRUE, width=6, height=6>>=
@@ -98,9 +96,8 @@ Now, we can view the sequence of AICc values from the SURFACE run, and compare i
 \begin{centering}
 <<fig=TRUE, width=4, height=4>>=
 surfaceAICPlot(fwd, bwd)
-abline(h=bm[[1]]$aic,lty="dashed")
-abline(h=ou1[[1]]$aic,lty="dashed")
-abline(h=H12[[1]]$aic,lty="dashed")
+abline(h=bm[[1]]$aic,lty="longdash")
+abline(h=H12[[1]]$aic,lty="longdash")
 text(c(6,6),c(bm[[1]]$aic, ou1[[1]]$aic, H12[[1]]$aic)-2,c("BM","OU1","H12"),cex=0.5) 
 @
 \end{centering}
@@ -135,8 +132,8 @@ We can then run SURFACE on the simulated data set, here doing the entire analysi
 newout<-runSurface(tree, newsim$dat)
 newsum<-surfaceSummary(newout$bwd)
 newkk<-length(newout$bwd)
-newsum$n_regime
-bsum$n_regime
+newsum$n_regimes
+bsum$n_regimes
 @
 \begin{center}
 <<fig=TRUE, width=8, height=4>>=
@@ -146,9 +143,9 @@ surfaceTraitPlot(newsim$data, newout$bwd[[newkk]], whattraits = c(3,2))
 @
 \end{center}
 
-If we wanted to do a proper hypothesis test of whether the `real' data set contains more convergence than expected by chance, we would repeat the step of simulating data sets (with different random number seeds) many times, and running SURFACE on them to get a null distribution of \texttt{deltak} or \texttt{c}. We could calculate the statistical significance of such a test as the proportion of null values that meet or exceed the observed value (note that in a small data set like this statistical power is poor, but that statistical properties are much better given larger trees and at least two trait dimensions).
+If we wanted to carry out a hypothesis test of whether the `real' data set contains more convergence than expected by chance, we could repeat the step of simulating data sets (with different random number seeds) many times, and running SURFACE on them to get a null distribution of \texttt{deltak} or \texttt{c}. We could calculate the statistical significance of such a test as the proportion of null values that meet or exceed the observed value (note that in a small data set like this statistical power is poor, but that statistical properties are much better given larger trees and at least two trait dimensions).
 
-This tutorial has given an overview of the uses of SURFACE; more information about the method is found in the documentation for each function, and in the manuscript (Ingram and Mahler, currently in revision for \emph{Meth. Ecol. Evol.} that introduces the method. 
+For more information about the method, see the manuscript in \emph{Methods in Ecology and Evolution}, the help files for each function, and the SURFACE homepage (\texttt{http://www.people.fas.harvard.edu/~ingram/web/surface.html}). 
 
 \end{document}
 

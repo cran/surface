@@ -1,5 +1,8 @@
 pmcSurface<-
 function(model1,model2,otree,odata,nboot=20,prob=0.95){
+
+	if(!require(pmc)) stop("'pmc' package must be installed to run 'pmcSurface'")
+
 	alphas1<-sapply(model1$fit,function(x)as.numeric(sqrt(summary(x)$alpha)))
 	alphas2<-sapply(model2$fit,function(x)as.numeric(sqrt(summary(x)$alpha)))
 	sigmas1<-sapply(model1$fit,function(x)as.numeric(sqrt(summary(x)$sigma)))

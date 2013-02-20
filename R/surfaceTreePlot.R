@@ -1,8 +1,7 @@
 surfaceTreePlot <-
 function(tree,hansenfit,cols=NULL,convcol=TRUE,labelshifts=FALSE,...){
 
-	fit<-hansenfit$fit
-	if(length(fit)>1)fit<-fit[[1]]
+	fit<-hansenfit$fit[[1]]
 	otree<-as(fit,"data.frame")
 	otree<-data.frame(otree,shifts=rep(NA,length(otree$nodes)))
 	otree$shifts[match(names(hansenfit$savedshifts),otree$nodes)]<-1:length(hansenfit$savedshifts)
@@ -16,7 +15,8 @@ if(is.null(cols)){
 	if(convcol){
 		cols<-character(length(xx))
 		cols[xx>1]<-rainbow(sum(xx>1))
-		cols[xx==1]<-c("black",grey(seq(0.7,0.3,length.out=sum(xx==1)-1)))
+		if(any(xx==1))	
+			cols[xx==1]<-c("black",grey(seq(0.7,0.3,length.out=sum(xx==1)-1)))
 	}else{
 		cols<-c("black",rainbow(length(xx)-1))
 	}	}
