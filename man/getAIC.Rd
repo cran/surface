@@ -5,7 +5,7 @@
 Akaike's Information Criterion for SURFACE Models
 }
 \description{
-Calculates AIC or AICc values, using the number of parameters as defined for Hansen models in SURFACE
+Calculates AICc for a Hansen model using combined likelihoods across multiple traits
 }
 \usage{
 getAIC(L, np, n, AICc = TRUE)
@@ -25,7 +25,7 @@ Number of parameters in the model
 Sample size (total number of trait values)
 }
   \item{AICc}{
-A logical indicating whether to use small-sample size corrected AIC; defaults to \code{TRUE}, and is set to \code{TRUE} during all calls within the \code{surface} functions
+A logical indicating whether to use small-sample size corrected AIC; defaults to \code{TRUE}, and is currently set to \code{TRUE} during all calls within the \code{surface} functions
 }
 }
 \details{
@@ -35,7 +35,7 @@ The number of parameters is calculated as p = k + (k' + 2) m, where k is the num
 \code{npSurface} returns an integer number of parameters. \code{getAIC} returns a numeric AIC or AICc value
 }
 \references{
-Ingram, T. & Mahler, D.L. (2013) SURFACE: detecting convergent evolution from comparative data by fitting Ornstein-Uhlenbeck models with stepwise AIC. Methods in Ecology and Evolution, in press. 
+Ingram, T. & Mahler, D.L. (2013) SURFACE: detecting convergent evolution from comparative data by fitting Ornstein-Uhlenbeck models with stepwise AIC. Methods in Ecology and Evolution 4: 416-425. 
 }
 \author{
 Travis Ingram

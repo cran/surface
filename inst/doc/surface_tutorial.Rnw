@@ -55,7 +55,7 @@ fsum$aics
 
 <<>>=
 bwd<-surfaceBackward(otree, odata, starting_model = fwd[[k]], aic_threshold = 0, 
-only_best = FALSE, verbose = FALSE, plotaic = FALSE)
+only_best = TRUE, verbose = FALSE, plotaic = FALSE)
 bsum<-surfaceSummary(bwd)
 kk<-length(bwd)
 @
@@ -129,7 +129,7 @@ We can then run SURFACE on the simulated data set, here doing the entire analysi
 
 \newpage
 <<>>=
-newout<-runSurface(tree, newsim$dat)
+newout<-runSurface(tree, newsim$dat, only_best = TRUE)
 newsum<-surfaceSummary(newout$bwd)
 newkk<-length(newout$bwd)
 newsum$n_regimes

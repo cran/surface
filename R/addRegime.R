@@ -41,7 +41,7 @@ for(i in 2:length(nodes)){
 		te<-try( fits[[i]]<-apply(odata2,2,function(x)hansen(x[-c(1,2)],otree,regimes=tempregs,sqrt.alpha=sqrt(x[1]),sigma=sqrt(x[2]))) )
 		if(class(te)=="try-error"){
 			print(paste("error fitting regime",i),quote=F)
-			LnLs[i]<-NA;aics[i]<-aic_threshold+1
+			LnLs[i]<-NA;aics[i]<-aic_threshold+9999
 		}else{
 			LnLs[i]<-sum(sapply(fits[[i]],function(x)summary(x)$loglik))
 			aics[i]<-getAIC(LnLs[i],k+nt*(2+kk),n*nt,TRUE)

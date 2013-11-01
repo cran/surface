@@ -33,7 +33,7 @@ A list with the following components:
   \item{theta }{matrix of estimated optima (one per regime per trait) in the final model}
 }
 \references{
-Ingram, T. & Mahler, D.L. (2013) SURFACE: detecting convergent evolution from comparative data by fitting Ornstein-Uhlenbeck models with stepwise AIC. Methods in Ecology and Evolution, in press. 
+Ingram, T. & Mahler, D.L. (2013) SURFACE: detecting convergent evolution from comparative data by fitting Ornstein-Uhlenbeck models with stepwise AIC. Methods in Ecology and Evolution 4: 416-425. 
 }
 \author{
 Travis Ingram

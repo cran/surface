@@ -30,7 +30,7 @@ For most analysis, this function is not accessed by the user, but is called from
 A list of length 1 containing an object with the same structure as the lists returned by each iteration of \code{surfaceForward} and \code{surfaceBackward} (containing elements \code{fit}, \code{all_aic}, \code{aic}, \code{savedshifts}, and \code{n_regimes}). This allows it to be supplied as argument \code{starting_list} in a call to \code{surfaceForward}. 
 }
 \references{
-Ingram, T. & Mahler, D.L. (2013) SURFACE: detecting convergent evolution from comparative data by fitting Ornstein-Uhlenbeck models with stepwise AIC. Methods in Ecology and Evolution, in press. 
+Ingram, T. & Mahler, D.L. (2013) SURFACE: detecting convergent evolution from comparative data by fitting Ornstein-Uhlenbeck models with stepwise AIC. Methods in Ecology and Evolution 4: 416-425. 
 }
 \author{
 Travis Ingram

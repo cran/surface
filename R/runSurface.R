@@ -3,9 +3,15 @@ function(tree,dat,exclude=0,aic_threshold=0,max_steps=NULL, verbose=FALSE, plota
 
 if(class(tree)!="phylo") stop("'tree' must by a 'phylo' formatted phylogenetic tree")
 
-if(only_best==FALSE) if(!require(igraph)) stop("The 'igraph' package must be loaded to use the option 'only_best=FALSE'")
+if(is.null(tree$node.label))
+	stop("Each node in 'tree' must have a unique label for back-compatibility between formats. Use 'nameNodes(tree)'. ")
 
-	tree<-nameNodes(tree)
+if(any(duplicated(tree$node.label)))
+	stop("Each node in 'tree' must have a unique label for back-compatibility between formats. Use 'nameNodes(tree)'. ")
+
+if(!is.data.frame(dat))
+	stop("'dat' must be formatted as a data frame with row names corresponding to the tip labels in 'tree'")
+
 	olist<-convertTreeData(tree,dat)
 	otree<-olist[[1]];odata<-olist[[2]]
 

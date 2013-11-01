@@ -1,6 +1,9 @@
 surfaceForward<-
 function(otree, odata, starting_list=NULL, starting_shifts=NULL, exclude=0, aic_threshold=0, max_steps=NULL, save_steps=FALSE, filename="temp_out_list.R", verbose=FALSE, plotaic=FALSE, error_skip=FALSE, sample_shifts=FALSE, sample_threshold=2){
 
+if(any(duplicated(as(otree,"data.frame")$labels)))
+	stop("Each node in 'tree' must have a unique label for back-compatibility between formats. Use 'nameNodes(tree)' prior to converting to ouch format")
+
 n<-otree@nterm;nt<-dim(odata)[2]
 if(is.null(max_steps))max_steps<-otree@nnodes
 

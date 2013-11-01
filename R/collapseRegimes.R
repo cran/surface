@@ -1,8 +1,6 @@
 collapseRegimes <-
 function(otree, odata, oldshifts, oldaic, oldfit, aic_threshold=0, only_best=FALSE, verbose=TRUE, plotaic=TRUE, error_skip=FALSE, sample_shifts=FALSE, sample_threshold=2){
 	
-if(only_best==FALSE) if(!require(igraph)) stop("The 'igraph' package must be loaded to use the option 'only_best=FALSE'")
-
 	n<-otree@nterm;nt<-dim(odata)[2]
 	oldalphas<-sapply(oldfit,function(x)summary(x)$alpha)
 	oldsigmas<-sapply(oldfit,function(x)summary(x)$sigma)
@@ -59,8 +57,8 @@ if(only_best==TRUE | dim(df)[1]==1){
 newshifts[which(newshifts==df$X[z])]<-rep(newshifts[which(newshifts==df$Y[z])][1],length(newshifts[which(newshifts==df$X[z])]))
 	}else{
 
-g<-graph.data.frame(df[,1:2],directed=FALSE)	
-cl<-clusters(g,"weak")
+g<-igraph::graph.data.frame(df[,1:2],directed=FALSE)	
+cl<-igraph::clusters(g,"weak")
 vx<-unique(c(as.character(df$X),as.character(df$Y))) #same as V(g)
 memb<-cl$memb
 if(min(memb)==0)memb<-memb+1

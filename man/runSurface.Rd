@@ -7,7 +7,9 @@ Run All Steps of a SURFACE Analysis
 Carries out both the forward and backward phases of SURFACE's stepwise AIC routine, with sensible default behaviors. 
 }
 \usage{
-runSurface(tree, dat, exclude = 0, aic_threshold = 0, max_steps = NULL, verbose = FALSE, plotaic = FALSE, error_skip = FALSE, only_best = FALSE, sample_shifts=FALSE, sample_threshold = 2)
+runSurface(tree, dat, exclude = 0, aic_threshold = 0, max_steps = NULL, 
+verbose = FALSE, plotaic = FALSE, error_skip = FALSE, only_best = FALSE,
+sample_shifts=FALSE, sample_threshold = 2)
 }
 \arguments{
   \item{tree}{
@@ -56,7 +58,9 @@ A list with two elements, \code{fwd} and \code{bwd}.
 \references{
 Butler, M.A. & King, A.A. (2004) Phylogenetic comparative analysis: a modeling approach for adaptive evolution. American Naturalist 164: 683-695.
 
-Ingram, T. & Mahler, D.L. (2013) SURFACE: detecting convergent evolution from comparative data by fitting Ornstein-Uhlenbeck models with stepwise AIC. Methods in Ecology and Evolution, in press. 
+Ingram, T. & Mahler, D.L. (2013) SURFACE: detecting convergent evolution from comparative data by fitting Ornstein-Uhlenbeck models with stepwise AIC. Methods in Ecology and Evolution 4: 416-425. 
+
+Mahler, D.L., Ingram, T., Revell, L.J. & Losos, J.B. (2013) Exceptional convergence on the macroevolutionary landscape in island lizard radiations. Science 341: 292-295.
 }
 \author{
 Travis Ingram

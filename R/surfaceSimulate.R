@@ -22,27 +22,27 @@ if(type=="BM"){
 			dimnames(vcv)<-list(paste("V",1:n_traits,sep=""),paste("V",1:n_traits,sep=""))
 
 		}else{
-			vcv<-ic.sigma(phy,dat)
+			vcv<-geiger::vcv.phylo(phy, dat)
 		}	
 	}
 	
 	phytransform<-function(phy,param){
 		if(param==0)phy2<-phy
-		if(param<0)phy2<-exponentialchangeTree(phy,a=param)
-		if(param>0)phy2<-ouTree(phy,alpha=param)
-		phy2<-rescaleTree(phy2,max(branching.times(phy)))
+		if(param<0)phy2<-geiger::transform(phy, model="EB", param)
+		if(param>0)phy2<-geiger::transform(phy, model="OU", param)
+		phy2<-geiger::transform(phy2,"depth", max(branching.times(phy)))
 		phy2
 		}		
 
 	if(is.null(param))param<-0
 	if(length(param)==1|n_traits==1){
 		phy2<-phytransform(phy,param=param[1])
-		simdat<-data.frame(sim.char(phy2,vcv)[,,1])
+		simdat<-data.frame(geiger::sim.char(phy2,vcv)[,,1])
 	}else{
 		if(length(param)!=n_traits)stop("`param` should either be a single value or a vector with number of elements equal to `ntrait`")
-		simdat<-sim.char(phytransform(phy,param=param[1]),matrix(vcv[1,1]))[,,1]
+		simdat<-geiger::sim.char(phytransform(phy,param=param[1]),matrix(vcv[1,1]))[,,1]
 		for(i in 2:n_traits){
-			simdat<-cbind(simdat,sim.char(phytransform(phy,param=param[i]),matrix(vcv[i,i]))[,,1])
+			simdat<-cbind(simdat,geiger::sim.char(phytransform(phy,param=param[i]),matrix(vcv[i,i]))[,,1])
 		}
 	simdat<-data.frame(simdat)
 	}

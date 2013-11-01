@@ -8,8 +8,13 @@ Adding Regimes to a Hansen Model
 Carries out the forward phase of SURFACE's stepwise AIC routine, adding regime shifts to a Hansen model. \code{addRegime} performs one step of this analysis, and is called repeatedly by \code{surfaceForward}. At each step, the delta-AICc of each possible shift placement (i.e. branch) is calculated, and an updated Hansen model is returned with one shift added. This process is iterated until the model stops improving beyond a threshold delta-AICc
 }
 \usage{
-surfaceForward(otree, odata, starting_list=NULL, starting_shifts=NULL, exclude=0,  aic_threshold=0, max_steps=NULL, save_steps=FALSE, filename="temp_out_list.R", verbose=FALSE, plotaic=FALSE, error_skip=FALSE, sample_shifts=FALSE, sample_threshold=2)
-addRegime(otree, odata, oldshifts, oldaic, oldfit, alloldaic=NULL, exclude=NULL, aic_threshold=0, verbose=FALSE, plotaic=FALSE, error_skip=FALSE, sample_shifts=FALSE, sample_threshold=2)
+surfaceForward(otree, odata, starting_list=NULL, starting_shifts=NULL, 
+exclude=0,  aic_threshold=0, max_steps=NULL, save_steps=FALSE, 
+filename="temp_out_list.R", verbose=FALSE, plotaic=FALSE, 
+error_skip=FALSE, sample_shifts=FALSE, sample_threshold=2)
+addRegime(otree, odata, oldshifts, oldaic, oldfit, alloldaic=NULL, 
+exclude=NULL, aic_threshold=0, verbose=FALSE, plotaic=FALSE, 
+error_skip=FALSE, sample_shifts=FALSE, sample_threshold=2)
 }
 \arguments{
   \item{otree}{
@@ -81,7 +86,9 @@ Can be time-consuming, as many likelihood searches are carried out at each itera
 \references{
 Butler, M.A. & King, A.A. (2004) Phylogenetic comparative analysis: a modeling approach for adaptive evolution. American Naturalist 164: 683-695.
 
-Ingram, T. & Mahler, D.L. (2013) SURFACE: detecting convergent evolution from comparative data by fitting Ornstein-Uhlenbeck models with stepwise AIC. Methods in Ecology and Evolution, in press. 
+Ingram, T. & Mahler, D.L. (2013) SURFACE: detecting convergent evolution from comparative data by fitting Ornstein-Uhlenbeck models with stepwise AIC. Methods in Ecology and Evolution 4: 416-425. 
+
+Mahler, D.L., Ingram, T., Revell, L.J. & Losos, J.B. (2013) Exceptional convergence on the macroevolutionary landscape in island lizard radiations. Science 341: 292-295.
 }
 \author{
 Travis Ingram

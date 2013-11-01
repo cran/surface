@@ -7,7 +7,12 @@ Simulate Data for SURFACE
 Provides several ways to simulate data sets on phylogenetic trees in conjunction with SURFACE analyses. Can simulate under simple models without regime shifts, under a Hansen model with sampled shift locations, or under a fitted Hansen model (optionally with resampled optima)
 }
 \usage{
-surfaceSimulate(phy, type = "BM", param = 0, n_traits = NULL, dat = NULL, vcv = NULL, hansenfit = NULL, shifts = NULL, n_shifts = NULL, n_conv_shifts = NULL, n_regimes = NULL, n_per_regime = NULL, no_nested = TRUE, optima = NULL, sample_optima = TRUE, optima_distrib = NULL, optima_type = "rnorm", sigma_squared = NULL, alpha = NULL, pshift_timefactor = NULL)
+surfaceSimulate(phy, type = "BM", param = 0, n_traits = NULL, dat = NULL, 
+vcv = NULL, hansenfit = NULL, shifts = NULL, n_shifts = NULL, 
+n_conv_shifts = NULL, n_regimes = NULL, n_per_regime = NULL, 
+no_nested = TRUE, optima = NULL, sample_optima = TRUE, 
+optima_distrib = NULL, optima_type = "rnorm", sigma_squared = NULL, 
+alpha = NULL, pshift_timefactor = NULL)
 }
 \arguments{
   \item{phy}{
@@ -90,7 +95,7 @@ A list with the following components (most are NULL if \code{type = "BM"}):
   \item{fit }{Generating Hansen model used in the simulation}
 }
 \references{
-Ingram, T. & Mahler, D.L. (2013) SURFACE: detecting convergent evolution from comparative data by fitting Ornstein-Uhlenbeck models with stepwise AIC. Methods in Ecology and Evolution, in press. 
+Ingram, T. & Mahler, D.L. (2013) SURFACE: detecting convergent evolution from comparative data by fitting Ornstein-Uhlenbeck models with stepwise AIC. Methods in Ecology and Evolution 4: 416-425. 
 }
 \author{
 Travis Ingram

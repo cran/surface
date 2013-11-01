@@ -1,0 +1,12 @@
+citHeader("To cite surface use:")
+
+citEntry(
+	entry="Article",
+	title="SURFACE: detecting convergent evolution from comparative data by fitting Ornstein-Uhlenbeck models with stepwise AIC. Methods in Ecology and Evolution 4: 416-425. ",
+	author="Ingram, T. & Mahler, D.L. (2013) ",
+	journal="Methods in Ecology and Evolution",
+	year=2013,
+	volume="4",
+	pages="416-425",
+	textVersion="Ingram, T. & Mahler, D.L. (2013) SURFACE: detecting convergent evolution from comparative data by fitting Ornstein-Uhlenbeck models with stepwise AIC. Methods in Ecology and Evolution 4: 416-425. doi:10.1111/2041-210X.12034"	   
+)

@@ -8,8 +8,13 @@ Collapsing Convergent Regimes in a Hansen Model
 Carries out the backward phase of SURFACE's stepwise AIC routine. Beginning with a fitted Hansen model produced by \code{surfaceForward}, tests pairwise collapses of regimes and identifies collapses that improve the fit. Continues this iterative process until the model stops improving beyond the given AIC threshold
 }
 \usage{
-surfaceBackward(otree, odata, starting_model, aic_threshold = 0, max_steps = NULL, save_steps = FALSE, filename = "temp_back_list.R", verbose = FALSE, only_best = FALSE, plotaic = FALSE, error_skip = FALSE, sample_shifts = FALSE, sample_threshold = 2)
-collapseRegimes(otree, odata, oldshifts, oldaic, oldfit, aic_threshold = 0, only_best = FALSE, verbose = TRUE, plotaic = TRUE, error_skip = FALSE, sample_shifts = FALSE, sample_threshold = 2)
+surfaceBackward(otree, odata, starting_model, aic_threshold = 0, 
+max_steps = NULL, save_steps = FALSE, filename = "temp_back_list.R", 
+verbose = FALSE, only_best = FALSE, plotaic = FALSE, 
+error_skip = FALSE, sample_shifts = FALSE, sample_threshold = 2)
+collapseRegimes(otree, odata, oldshifts, oldaic, oldfit, aic_threshold = 0, 
+only_best = FALSE, verbose = TRUE, plotaic = TRUE, error_skip = FALSE, 
+sample_shifts = FALSE, sample_threshold = 2)
 }
 \arguments{
   \item{otree}{
@@ -74,7 +79,9 @@ Can be time-consuming, as the number of likelihood searches at a step is \code{k
 \references{
 Butler, M.A. & King, A.A. (2004) Phylogenetic comparative analysis: a modeling approach for adaptive evolution. American Naturalist 164: 683-695.
 
-Ingram, T. & Mahler, D.L. (2013) SURFACE: detecting convergent evolution from comparative data by fitting Ornstein-Uhlenbeck models with stepwise AIC. Methods in Ecology and Evolution, in press. 
+Ingram, T. & Mahler, D.L. (2013) SURFACE: detecting convergent evolution from comparative data by fitting Ornstein-Uhlenbeck models with stepwise AIC. Methods in Ecology and Evolution 4: 416-425. 
+
+Mahler, D.L., Ingram, T., Revell, L.J. & Losos, J.B. (2013) Exceptional convergence on the macroevolutionary landscape in island lizard radiations. Science 341: 292-295.
 }
 \author{
 Travis Ingram

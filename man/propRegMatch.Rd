@@ -17,7 +17,7 @@ First fitted Hansen model; can be the \code{$fit} component of the list returned
 Second fitted Hansen model; see \code{fit1}
 }
   \item{internal}{
-A logical indicating whether internal branches should be included in the calculation of matching in addition to tip taxa; defaults to FALSE
+A logical indicating whether internal branches should be included in the calculation of matching in addition to tip taxa; this is only possible if the two trees have identical topology; defaults to FALSE
 }
 }
 %\details{
@@ -27,7 +27,7 @@ A logical indicating whether internal branches should be included in the calcula
 A single value quantifying the proportion of pairwise regime comparisons that are the same between the two models
 }
 \references{
-Ingram, T. & Mahler, D.L. (2013) SURFACE: detecting convergent evolution from comparative data by fitting Ornstein-Uhlenbeck models with stepwise AIC. Methods in Ecology and Evolution, in press. 
+Ingram, T. & Mahler, D.L. (2013) SURFACE: detecting convergent evolution from comparative data by fitting Ornstein-Uhlenbeck models with stepwise AIC. Methods in Ecology and Evolution 4: 416-425. 
 }
 \author{
 Travis Ingram

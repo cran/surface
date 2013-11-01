@@ -8,8 +8,10 @@ Plot the AIC Throughout a SURFACE Analysis
 Plots a line graph showing how the AICc changed over the forward and backward phases of a SURFACE analysis. \code{surfaceAICPlot} can optionally show the change in the deviance or 'partial AICc' for each trait separately as well as for the analysis as a whole. \code{surfaceAICMultiPlot} plots lines from multiple runs on the same plot, allowing comparison among analyses done on alternate tree topologies or with stochasticity added using \code{sample_shifts}
 }
 \usage{
-surfaceAICPlot(fwd = NULL, bwd = NULL, out = NULL, summ = NULL, traitplot = "none", cols = NULL, daic = FALSE,  ...)
-surfaceAICMultiPlot(fwd = NULL, bwd = NULL, out = NULL, summ = NULL, cols = NULL, daic = FALSE,  ...)
+surfaceAICPlot(fwd = NULL, bwd = NULL, out = NULL, summ = NULL, 
+traitplot = "none", cols = NULL, daic = FALSE,  ...)
+surfaceAICMultiPlot(fwd = NULL, bwd = NULL, out = NULL, summ = NULL, 
+cols = NULL, daic = FALSE,  ...)
 }
 \arguments{
   \item{fwd}{
@@ -44,7 +46,9 @@ If values are plotted on a trait-by-trait basis, either \code{traitplot="dev"} o
 Plots AIC values from a SURFACE analysis on the current graphics device
 }
 \references{
-Ingram, T. & Mahler, D.L. (2013) SURFACE: detecting convergent evolution from comparative data by fitting Ornstein-Uhlenbeck models with stepwise AIC. Methods in Ecology and Evolution, in press. 
+Ingram, T. & Mahler, D.L. (2013) SURFACE: detecting convergent evolution from comparative data by fitting Ornstein-Uhlenbeck models with stepwise AIC. Methods in Ecology and Evolution 4: 416-425. 
+
+Mahler, D.L., Ingram, T., Revell, L.J. & Losos, J.B. (2013) Exceptional convergence on the macroevolutionary landscape in island lizard radiations. Science 341: 292-295.
 }
 \author{
 Travis Ingram

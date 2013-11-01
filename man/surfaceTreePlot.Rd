@@ -9,7 +9,9 @@ Plotting functions to visualize the results of a SURFACE analysis, with colors d
 }
 \usage{
 surfaceTreePlot(tree, hansenfit, cols = NULL, convcol = TRUE, labelshifts = FALSE, ...)
-surfaceTraitPlot(dat, hansenfit, whattraits = c(1, 2), cols = NULL, convcol = TRUE, pchs = c(21,21), cex.opt = 2.5, optellipses = FALSE, ellipsescale = 1, y.lim = NULL, x.lim = NULL, y.lab = NULL, x.lab = NULL, ...)
+surfaceTraitPlot(dat, hansenfit, whattraits = c(1, 2), cols = NULL, 
+convcol = TRUE, pch.pt = 21, pch.opt = 21, cex.opt = 2.5, optellipses = FALSE, 
+ellipsescale = 1, y.lim = NULL, x.lim = NULL, y.lab = NULL, x.lab = NULL, ...)
 }
 \arguments{
   \item{tree}{
@@ -33,14 +35,17 @@ A logical indicating whether to select separate colors for convergent (colorful)
   \item{labelshifts}{
 A logical indicating whether to add integer labels to branches in the tree to show the order in which regime shifts were added in the forward phase (defaults to \code{FALSE})
 }
-  \item{pchs}{
-Optional two-element vector of plotting characters for trait values and optima in \code{surfaceTraitPlot}; defaults to 21 (filled circles) for both traits and optima 
+  \item{pch.pt}{
+Plotting character to use for trait values in \code{surfaceTraitPlot}; defaults to 21 (filled circles) 
+}
+  \item{pch.opt}{
+Plotting character to use for optima in \code{surfaceTraitPlot}; defaults to 21 (filled circles) 
 }
   \item{cex.opt}{
 Character expansion for symbols representing the optima in \code{surfaceTraitPlot}; defaults to 2.5 (symbols representing data points can be specified with \code{cex})
 }
   \item{optellipses}{
-A logical indicating whether to draw ellipses based on the fitted OU model instead of denoting optimum positions with \code{pchs} and \code{cex.opt}. The ellipses are drawn as the optima +/- the standard deviation of the stationary distribution of the inferred OU process: sqrt(log(2)/alpha), multiplied by \code{ellipsescale}
+A logical indicating whether to draw ellipses based on the fitted OU model instead of denoting optimum positions with \code{pchs} and \code{cex.opt}. The ellipses are drawn as the optima +/- the standard deviation of the stationary distribution of the inferred OU process: sigma_squared/(2*alpha), multiplied by \code{ellipsescale}
 }
   \item{ellipsescale}{
 A scalar or vector indicating how many standard deviations to draw ellipses above and below the optima; if a vector, concentric ellipses of various sizes will be drawn; defaults to 1
@@ -68,14 +73,16 @@ For trait plots using the option \code{optellipses=TRUE}, note that in some case
 Creates one tree or trait plot on the current graphics device
 }
 \references{
-Ingram, T. & Mahler, D.L. (2013) SURFACE: detecting convergent evolution from comparative data by fitting Ornstein-Uhlenbeck models with stepwise AIC. Methods in Ecology and Evolution, in press. 
+Ingram, T. & Mahler, D.L. (2013) SURFACE: detecting convergent evolution from comparative data by fitting Ornstein-Uhlenbeck models with stepwise AIC. Methods in Ecology and Evolution 4: 416-425. 
+
+Mahler, D.L., Ingram, T., Revell, L.J. & Losos, J.B. (2013) Exceptional convergence on the macroevolutionary landscape in island lizard radiations. Science 341: 292-295.
 }
 \author{
 Travis Ingram
 }
 
 \seealso{
-\code{\link{surfaceForward}}, \code{\link{surfaceBackward}}, \code{\link{surfaceSimulate}}, \code{\link{surfaceSummary}}, code{\link{surfaceAICPlot}}
+\code{\link{surfaceForward}}, \code{\link{surfaceBackward}}, \code{\link{surfaceSimulate}}, \code{\link{surfaceSummary}}, \code{\link{surfaceAICPlot}}
 }
 
 \keyword{hplot}
