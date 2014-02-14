@@ -1,5 +1,5 @@
-b386e948750fa28b8c96922d027ef8d0 *DESCRIPTION
-0c10c68248aeaed4741570bde2aefefb *NAMESPACE
+4a2f71bcb288a063bc40e350d370def6 *DESCRIPTION
+9b2731a99c8b7ede17551376b590c107 *NAMESPACE
 3030e68fad7ef56c48151f8f29873f7c *R/addRegime.R
 e62006ec3d5a781ba9d9f6494a3c753f *R/collapseRegimes.R
 0ca6b79b21d00d920adb2e69633a0bfe *R/convertBack.R
@@ -17,10 +17,11 @@ c311d851ed0acd4cce5079f99895c976 *R/startingModel.R
 553d35f7df6b355e2b5e741e0e8a3401 *R/surfaceAICPlot.R
 b5f3a6bd81812f8681523961e0378215 *R/surfaceBackward.R
 800375250e27a2613d7c8952767fead6 *R/surfaceForward.R
-1add97813bd35b953df418b29bc58a97 *R/surfaceSimulate.R
+77e8ec875de39a7cc74f2495f38ea518 *R/surfaceSimulate.R
 afe5c28be272bbbe55ecca449a0cf284 *R/surfaceSummary.R
-ec0d8f46ea75fc71bb38fc2c33cb6978 *R/surfaceTraitPlot.R
+de11c5cf190db67cef644430fc19ed6c *R/surfaceTraitPlot.R
 a7b207f281e57d753f73c11c770bd3a7 *R/surfaceTreePlot.R
+438bdbc3d257280e78db5a8b029d7631 *build/vignette.rds
 2736484e796216675663fd52b83cbe13 *data/surfaceDemo.RData
 48e110d6d9d87bb13c8948a18b3d8ef9 *inst/CITATION
 6736ade7dcef374b3048264353fc9d30 *inst/doc/surface_tutorial.R
@@ -41,5 +42,5 @@ c52e6b3b8986e5aac320fe00acbb787d *man/surfaceBackward.Rd
 3f4cf2e4ce0ddec52054f05dad09d894 *man/surfaceForward.Rd
 83b470e048d291889e93b1f95f5dfbc2 *man/surfaceSimulate.Rd
 0b52dad8b0b7064218dfc269ef66a549 *man/surfaceSummary.Rd
-7f5331d04002aac6a2aa20c2d6b43615 *man/surfaceTreePlot.Rd
+80cb3d16a9941b8580eb25936aecd567 *man/surfaceTreePlot.Rd
 f19771902d7323f9d43ccb7dbfdce437 *vignettes/surface_tutorial.Rnw

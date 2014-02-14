@@ -1,4 +1,5 @@
-surfaceTraitPlot<-function(dat,hansenfit,whattraits=c(1,2),cols=NULL, convcol=TRUE,pch.pt=21,pch.opt=21,cex.opt=2.5,optellipses=FALSE, ellipsescale=1,y.lim=NULL,x.lim=NULL,y.lab=NULL,x.lab=NULL,...){
+surfaceTraitPlot<-
+function(dat,hansenfit,whattraits=c(1,2),cols=NULL, convcol=TRUE, pchs=c(21,21),cex.opt=2.5,optellipses=FALSE, ellipsescale=1,flatten1D=FALSE, add=FALSE,ypos=0,plotoptima=TRUE,plottraits=TRUE,y.lim=NULL,x.lim=NULL,y.lab=NULL,x.lab=NULL,...){
 
 	fit<-hansenfit$fit
 	if(length(fit)>1|class(fit)=="list")fit<-fit[[1]]
@@ -14,19 +15,20 @@ if(is.null(cols)){
 	if(convcol){
 		cols<-character(length(xx))
 		cols[xx>1]<-rainbow(sum(xx>1))
-		cols[xx==1]<-c("black",grey(seq(0.7,0.3,length.out=sum(xx==1)-1)))
+		if(any(xx==1))	
+			cols[xx==1]<-c("black",grey(seq(0.7,0.3,length.out=sum(xx==1)-1)))
 	}else{
 		cols<-c("black",rainbow(length(xx)-1))
 	}	}
 
-	if(pch.pt[1]%in%(21:25)){
+	if(pchs[1]%in%(21:25)){
 		datbg<-cols[as.numeric(factor(otree2[,5]))]
 		datcols<-rep("black",length(datbg))
 	}else{
 		datcols<-cols[as.numeric(factor(otree2[,5]))]
 		datbg<-rep("black",length(datcols))
 	}
-	if(pch.opt%in%(21:25)){
+	if(pchs[2]%in%(21:25)){
 		optcols<-rep("black",length(cols))
 		optbg<-cols
 	}else{
@@ -43,15 +45,30 @@ if(is.null(cols)){
 		widths<-rep(0,dim(dat)[2])
 	}
 
-	x<-whattraits[1];y<-whattraits[2]
+if(dim(optima)[2]==1)whattraits<-1
+	x<-whattraits[1]
+if(length(whattraits)==1){
+	if(flatten1D){
+		optima<-data.frame(optima[,x,drop=F],Regime=rep(ypos[1],nrow(optima)))
+		dat<-data.frame(dat[,x,drop=F],Regime=rep(ypos[1],nrow=optima))
+	}else{
+		optima<-data.frame(optima[,x,drop=F], Regime=as.numeric(factor(rownames(optima))))
+		dat<-data.frame(dat[,x,drop=F],Regime=as.numeric(factor(otree2[,5])))
+	}
+	widths<-c(widths[x],0.4/ellipsescale[1])
+	x<-1;y<-2
+}else{
+	y<-whattraits[2]
+}
 	if(is.null(y.lim))
 		y.lim<-range(c(dat[,y],optima[,y]+widths[y]*ellipsescale[1],optima[,y]-widths[y]*ellipsescale[1]))
 	if(is.null(x.lim))
 		x.lim<-range(c(dat[,x],optima[,x]+widths[x]*ellipsescale[1],optima[,x]-widths[x]*ellipsescale[1]))
 	if(is.null(x.lab)) x.lab<-names(dat)[x]
 	if(is.null(y.lab)) y.lab<-names(dat)[y]
-	plot(NA,xlim=x.lim,ylim=y.lim,xlab=x.lab,ylab=y.lab,...)
-	if(optellipses){
+	if(add==FALSE) plot(NA,xlim=x.lim,ylim=y.lim,xlab=x.lab,ylab=y.lab,...)
+	if(plotoptima){
+		if(optellipses){
 		ae<-seq(0,2*pi,length=100)
 		for(i in 1:dim(optima)[1]){
 			for(j in 1:length(ellipsescale)){
@@ -59,7 +76,8 @@ if(is.null(cols)){
 			ye<-optima[i,y]+ellipsescale[j]*widths[y]*sin(ae)
 			polygon(x=xe,y=ye,col=cols[i])
 	}}	}else{
-	points(optima[,x],optima[,y],pch=pch.opt,col=optcols,bg=optbg,cex=cex.opt)
+	points(optima[,x],optima[,y],pch=pchs[2],col=optcols, bg=optbg,cex=cex.opt)
 		}
-	points(dat[,x],dat[,y],col=datcols,bg=datbg,pch=pch.pt,...)
+	}	
+	if(plottraits)points(dat[,x],dat[,y],col=datcols,bg=datbg,pch=pchs[1],...)
 }

@@ -10,8 +10,10 @@ Plotting functions to visualize the results of a SURFACE analysis, with colors d
 \usage{
 surfaceTreePlot(tree, hansenfit, cols = NULL, convcol = TRUE, labelshifts = FALSE, ...)
 surfaceTraitPlot(dat, hansenfit, whattraits = c(1, 2), cols = NULL, 
-convcol = TRUE, pch.pt = 21, pch.opt = 21, cex.opt = 2.5, optellipses = FALSE, 
-ellipsescale = 1, y.lim = NULL, x.lim = NULL, y.lab = NULL, x.lab = NULL, ...)
+convcol = TRUE, pchs = c(21, 21), cex.opt = 2.5, optellipses = FALSE, 
+ellipsescale = 1, flatten1D = FALSE, add = FALSE, ypos = 0,
+ plotoptima = TRUE, plottraits = TRUE, y.lim = NULL, x.lim = NULL, 
+y.lab = NULL, x.lab = NULL, ...)
 }
 \arguments{
   \item{tree}{
@@ -35,11 +37,8 @@ A logical indicating whether to select separate colors for convergent (colorful)
   \item{labelshifts}{
 A logical indicating whether to add integer labels to branches in the tree to show the order in which regime shifts were added in the forward phase (defaults to \code{FALSE})
 }
-  \item{pch.pt}{
-Plotting character to use for trait values in \code{surfaceTraitPlot}; defaults to 21 (filled circles) 
-}
-  \item{pch.opt}{
-Plotting character to use for optima in \code{surfaceTraitPlot}; defaults to 21 (filled circles) 
+  \item{pchs}{
+Vector with two integers representing the plotting characters to use for trait values and optima, respectively, in \code{surfaceTraitPlot}; both default to 21 (filled circles) 
 }
   \item{cex.opt}{
 Character expansion for symbols representing the optima in \code{surfaceTraitPlot}; defaults to 2.5 (symbols representing data points can be specified with \code{cex})
@@ -49,6 +48,21 @@ A logical indicating whether to draw ellipses based on the fitted OU model inste
 }
   \item{ellipsescale}{
 A scalar or vector indicating how many standard deviations to draw ellipses above and below the optima; if a vector, concentric ellipses of various sizes will be drawn; defaults to 1
+}
+  \item{flatten1D}{
+A logical indicating whether all regimes should be placed on a single line when \code{surfaceTraitPlot} is called for a single trait; defaults to \code{FALSE}
+}
+  \item{add}{
+A logical indicating whether to add a new element to an existing \code{surfaceTraitPlot} graph instead of creating a new one; defaults to \code{FALSE} 
+}
+  \item{ypos}{
+Position on the y axis to place the traits and optima on; only applies if a single trait is used and \code{flatten1D = TRUE}
+}
+  \item{plotoptima}{
+A logical indicating whether the optima should be displayed in \code{surfaceTraitPlot}; defaults to \code{TRUE}
+}
+  \item{plottraits}{
+A logical indicating whether the trait values should be displayed in \code{surfaceTraitPlot}; defaults to \code{TRUE}
 }
   \item{y.lim}{
 Lower and upper limits for the y-axis; by default will be calculated to fit all points and ellipses fit in the frame
