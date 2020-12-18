@@ -17,9 +17,7 @@ Which node in the ouchtree object to identify the descendants of
 An \code{ouchtree} object
 }
 }
-%\details{
-%%  ~~ If necessary, more details than the description above ~~
-%}
+
 \value{
 A vector of integers corresponding to the descendents (integers match the \code{@nodes} element of the \code{ouchtree})
 }
@@ -29,11 +27,12 @@ Ingram, T. & Mahler, D.L. (2013) SURFACE: detecting convergent evolution from co
 \author{
 Travis Ingram
 }
-%\note{
-%%  ~~further notes~~
-%}
-
-%\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-%}
+\examples{
+data(surfaceDemo)
+tree<-surfaceDemo$tree
+dat<-surfaceDemo$sim$dat
+olist<-convertTreeData(tree,dat)
+otree<-olist[[1]]
+ouchDescendants(6, otree)
+}
 \keyword{manip}

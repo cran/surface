@@ -38,12 +38,15 @@ Ingram, T. & Mahler, D.L. (2013) SURFACE: detecting convergent evolution from co
 \author{
 Travis Ingram
 }
-%\note{
-%%  ~~further notes~~
-%}
 
 \seealso{
 \code{\link{surfaceBackward}}, \code{\link{surfaceForward}}, \code{\link{surfaceTreePlot}}
+}
+\examples{
+data(surfaceDemo)
+tree<-surfaceDemo$tree
+dat<-surfaceDemo$sim$dat
+olist<-convertTreeData(tree,dat)
 }
 
 \keyword{manip}

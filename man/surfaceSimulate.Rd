@@ -100,12 +100,16 @@ Ingram, T. & Mahler, D.L. (2013) SURFACE: detecting convergent evolution from co
 \author{
 Travis Ingram
 }
-%\note{
-%%  ~~further notes~~
-%}
 
 \seealso{
 \code{\link{surfaceForward}}, \code{\link{surfaceBackward}}, \code{\link{surfaceTreePlot}}, \code{\link{surfaceTraitPlot}}
 }
-
+\examples{
+data(surfaceDemo)
+tree<-surfaceDemo$tree
+dat<-surfaceDemo$sim$dat
+olist<-convertTreeData(tree,dat)
+otree<-olist[[1]]; odata<-olist[[2]]
+sim<-surfaceSimulate(otree,type="hansen-paint",dat=dat,shifts=c(c("1"="a","6"="b","17"="c")))
+}
 \keyword{datagen}

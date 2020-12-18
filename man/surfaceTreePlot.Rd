@@ -98,5 +98,14 @@ Travis Ingram
 \seealso{
 \code{\link{surfaceForward}}, \code{\link{surfaceBackward}}, \code{\link{surfaceSimulate}}, \code{\link{surfaceSummary}}, \code{\link{surfaceAICPlot}}
 }
-
+\examples{
+data(surfaceDemo)
+tree<-surfaceDemo$tree
+dat<-surfaceDemo$sim$dat
+olist<-convertTreeData(tree,dat)
+otree<-olist[[1]]; odata<-olist[[2]]
+startmod<-startingModel(otree, odata, shifts = c("6"="b")) 
+surfaceTreePlot(tree,startmod[[1]],labelshifts=TRUE,cols=c("black","red"))
+surfaceTraitPlot(dat,startmod[[1]],whattraits=c(1,2),cols=c("black","red"))
+}
 \keyword{hplot}

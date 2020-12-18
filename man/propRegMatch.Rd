@@ -32,12 +32,19 @@ Ingram, T. & Mahler, D.L. (2013) SURFACE: detecting convergent evolution from co
 \author{
 Travis Ingram
 }
-%\note{
-%%  ~~further notes~~
-%}
+
 
 \seealso{
 \code{\link{surfaceForward}}, \code{\link{surfaceBackward}}, \code{\link{surfaceSimulate}}
 }
-
+\examples{
+data(surfaceDemo)
+tree<-surfaceDemo$tree
+dat<-surfaceDemo$sim$dat
+olist<-convertTreeData(tree,dat)
+otree<-olist[[1]]; odata<-olist[[2]]
+startmod<-startingModel(otree, odata, shifts = c("6"="b")) 
+startmod2<-startingModel(otree, odata, shifts = c("6"="b","17"="c")) 
+propRegMatch(startmod[[1]]$fit, startmod2[[1]]$fit)
+}
 \keyword{arith}

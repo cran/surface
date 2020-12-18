@@ -14,9 +14,7 @@ getBranchTimes(h)
 Fitted \code{ouchtree} or \code{hansentree} object
 }
 }
-%\details{
-%%  ~~ If necessary, more details than the description above ~~
-%}
+
 \value{
 A vector of branching times
 }
@@ -26,11 +24,12 @@ Ingram, T. & Mahler, D.L. (2013) SURFACE: detecting convergent evolution from co
 \author{
 Travis Ingram
 }
-%\note{
-%%  ~~further notes~~
-%}
-
-%\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-%}
+\examples{
+data(surfaceDemo)
+tree<-surfaceDemo$tree
+dat<-surfaceDemo$sim$dat
+olist<-convertTreeData(tree,dat)
+otree<-olist[[1]]
+getBranchTimes(otree)
+}
 \keyword{manip}

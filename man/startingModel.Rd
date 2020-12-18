@@ -40,4 +40,12 @@ Travis Ingram
 \code{\link{surfaceForward}}
 }
 
+\examples{
+data(surfaceDemo)
+tree<-surfaceDemo$tree
+dat<-surfaceDemo$sim$dat
+olist<-convertTreeData(tree,dat)
+otree<-olist[[1]]; odata<-olist[[2]]
+startmod<-startingModel(otree, odata, shifts = c("6"="b")) 
+}
 \keyword{manip}

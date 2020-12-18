@@ -75,9 +75,11 @@ The fitted SURFACE model can be visualized either as paintings of regimes on the
 surfaceTreePlot(tree, bwd[[kk]], labelshifts = T)
 @
 <<fig=TRUE, width=8, height=4>>=
+oldpar <- par(no.readonly = TRUE)
 par(mfrow=c(1,2), mai=c(0.8,0.8,0.2,0.2))
 surfaceTraitPlot(dat, bwd[[kk]], whattraits = c(1,2))
 surfaceTraitPlot(dat, bwd[[kk]], whattraits = c(3,2))
+par(oldpar)
 @
 \end{centering}
 
@@ -119,9 +121,11 @@ shifts=fwd[[k]]$savedshifts, sample_optima=TRUE)
 We can then visualize the simulated trait data; as there is no convergence in the true model, setting \texttt{convcol = FALSE} makes a more colorful figure. 
 \begin{center}
 <<fig=TRUE, width=8, height=4>>=
+oldpar <- par(no.readonly = TRUE)
 par(mfrow=c(1,2),mai=c(0.8,0.8,0.2,0.2))
 surfaceTraitPlot(newsim$data, newsim, whattraits = c(1,2), convcol = FALSE)
 surfaceTraitPlot(newsim$data, newsim, whattraits = c(3,2), convcol = FALSE)
+par(oldpar)
 @
 \end{center}
 
@@ -137,9 +141,11 @@ bsum$n_regimes
 @
 \begin{center}
 <<fig=TRUE, width=8, height=4>>=
+oldpar <- par(no.readonly = TRUE)
 par(mfrow=c(1,2),mai=c(0.8,0.8,0.2,0.2))
 surfaceTraitPlot(newsim$data, newout$bwd[[newkk]], whattraits = c(1,2))
 surfaceTraitPlot(newsim$data, newout$bwd[[newkk]], whattraits = c(3,2))
+par(oldpar)
 @
 \end{center}
 

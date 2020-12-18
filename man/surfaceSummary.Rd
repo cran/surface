@@ -42,8 +42,16 @@ Travis Ingram
 The elements \code{n_regimes_seq} and \code{n_regimes} contain measures of the regime structure in a SURFACE analysis (for each iteration, and in the final model, respectively). The measures returned are: \code{k} (the number of regime shifts, counting the basal regime as 1), \code{kprime}, (the number of regimes, some of which may be reached by multiple shifts), \code{deltak} (\code{k-kprime}, a measure of convergence), \code{c} (the number of shifts to convergent regimes, another measure of convergence), \code{kprime_conv} (the number of convergent regimes shifted to multiple times), and \code{kprime_nonconv} (the number of nonconvergent regimes only shifted to once)
 }
 
-
 \seealso{
 \code{\link{surfaceForward}}, \code{\link{surfaceBackward}}
+}
+\examples{
+	\dontrun{
+data(surfaceDemo)
+tree<-surfaceDemo$tree
+dat<-surfaceDemo$sim$dat
+result<-runSurface(tree,dat)
+surfaceSummary(result$fwd,result$bwd)
+	}
 }
 \keyword{manip}

@@ -40,8 +40,16 @@ Ingram, T. & Mahler, D.L. (2013) SURFACE: detecting convergent evolution from co
 \author{
 Travis Ingram
 }
-%\note{
-%%  ~~further notes~~
-%}
+\examples{
+data(surfaceDemo)
+tree<-surfaceDemo$tree
+dat<-surfaceDemo$sim$dat
+olist<-convertTreeData(tree,dat)
+otree<-olist[[1]]; odata<-olist[[2]]
+startmod<-startingModel(otree, odata, shifts = c("6"="b")) 
+np<-as.numeric(npSurface(startmod[[1]]))
+LnL<-sum(sapply(startmod[[1]]$fit, function(x) summary(x)$loglik))
+getAIC(LnL,np,n=ncol(dat)*nrow(dat),AICc=TRUE)
+}
 
 \keyword{arith}

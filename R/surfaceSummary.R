@@ -12,7 +12,9 @@ surfaceSummary <-function(fwd = NULL, bwd = NULL)
 	lnls<-sapply(obj,function(x){
 			sapply(x$fit,function(y)summary(y)$loglik)
 		})
-	if(class(lnls)!="matrix")lnls<-matrix(lnls,nrow=1,dimnames=list(names(lnls)[1],NULL))
+
+	if(class(lnls)[1]!="matrix") lnls<-matrix(lnls,nrow=1,dimnames=list(names(lnls)[1],NULL))
+
 	aics<-sapply(obj,function(x)x$aic);names(aics)<-1:k
 	n_regimes_seq<-sapply(obj,function(x)x$n_regimes)
 	obj<-obj[[k]]

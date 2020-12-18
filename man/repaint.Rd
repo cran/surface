@@ -20,9 +20,7 @@ Named character vector of regime shifts
 A logical indicating whether the painting of a clade should include the stem branch; defaults to \code{TRUE}, and is set to \code{TRUE} during all calls within the \code{surface} functions
 }
 }
-%\details{
-%%  ~~ If necessary, more details than the description above ~~
-%}
+
 \value{
 A named character vector of regime assignments for each branch, as returned by \code{paint}
 }
@@ -34,11 +32,12 @@ Ingram, T. & Mahler, D.L. (2013) SURFACE: detecting convergent evolution from co
 \author{
 Travis Ingram
 }
-%\note{
-%%  ~~further notes~~
-%}
-
-%\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-%}
+\examples{
+data(surfaceDemo)
+tree<-surfaceDemo$tree
+dat<-surfaceDemo$sim$dat
+olist<-convertTreeData(tree,dat)
+otree<-olist[[1]]
+repaint(otree, regshifts = c(c("1"="a","6"="b","17"="c")))
+}
 \keyword{manip}

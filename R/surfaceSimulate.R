@@ -84,7 +84,7 @@ if(sample_optima){
 		}
 	}
 if(!is.null(optima)){
-	if(class(optima)=="numeric")optima<-matrix(optima,ncol=1)
+	if(class(optima)[1]!="matrix")optima<-matrix(optima,ncol=1)
 	if(dim(optima)[1]!=n_regimes)stop("If setting optima must either sample or set `n_regime`")
 	for(i in 1:length(tempfit))tempfit[[i]]@theta[[1]]<-optima[,i]
 	}
@@ -182,7 +182,7 @@ if(is.null(optima)){
 #	for(i in 1:n_traits)optima[,i]<-sample(seq(optima_distrib[1]-optima_distrib[2]/2,optima_distrib[1]+optima_distrib[2]/2,length.out=n_regimes))
 		}
 	}else{
-		if(class(optima)=="numeric")optima<-matrix(optima,ncol=1)
+		if(class(optima)[1]!="matrix")optima<-matrix(optima,ncol=1)
 		if(any(dim(optima)!=c(n_regimes,n_traits)))stop("Optima must be provided as a matrix with dimensions [n_regimes, n_traits]")
 		}
 

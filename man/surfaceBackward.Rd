@@ -86,12 +86,22 @@ Mahler, D.L., Ingram, T., Revell, L.J. & Losos, J.B. (2013) Exceptional converge
 \author{
 Travis Ingram
 }
-%\note{
-%%  ~~further notes~~
-%}
+
 
 \seealso{
 \code{\link{surfaceForward}}, \code{\link{surfaceSimulate}}, \code{\link{surfaceTreePlot}}, \code{\link{surfaceSummary}}
+}
+\examples{
+	\dontrun{
+data(surfaceDemo)
+tree<-surfaceDemo$tree
+dat<-surfaceDemo$sim$dat
+olist<-convertTreeData(tree,dat)
+otree<-olist[[1]]; odata<-olist[[2]]
+fwd<-surfaceForward(otree, odata, aic_threshold = 0, exclude = 0, verbose = FALSE, plotaic = FALSE)
+k<-length(fwd)
+bwd<-surfaceBackward(otree, odata, starting_model = fwd[[k]], aic_threshold = 0)
+	}
 }
 \keyword{models}
 \keyword{iteration}

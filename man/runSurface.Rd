@@ -65,13 +65,16 @@ Mahler, D.L., Ingram, T., Revell, L.J. & Losos, J.B. (2013) Exceptional converge
 \author{
 Travis Ingram
 }
-%\note{
-%%  ~~further notes~~
-%}
-
 \seealso{
 \code{\link{surfaceBackward}}, \code{\link{surfaceForward}}
 }
-
+\examples{
+	\dontrun{
+data(surfaceDemo)
+tree<-surfaceDemo$tree
+dat<-surfaceDemo$sim$dat
+result<-runSurface(tree,dat)
+	}
+}
 \keyword{models}
 \keyword{iteration}
