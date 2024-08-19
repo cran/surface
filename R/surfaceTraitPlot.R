@@ -2,7 +2,7 @@ surfaceTraitPlot<-
 function(dat,hansenfit,whattraits=c(1,2),cols=NULL, convcol=TRUE, pchs=c(21,21),cex.opt=2.5,optellipses=FALSE, ellipsescale=1,flatten1D=FALSE, add=FALSE,ypos=0,plotoptima=TRUE,plottraits=TRUE,y.lim=NULL,x.lim=NULL,y.lab=NULL,x.lab=NULL,...){
 
 	fit<-hansenfit$fit
-	if(length(fit)>1|class(fit)=="list")fit<-fit[[1]]
+	if(length(fit)>1|inherits(fit,"list"))fit<-fit[[1]]
 	otree<-as(fit,"data.frame")
 	otree<-data.frame(otree,shifts=rep(NA,length(otree$nodes)))
 	otree$shifts[match(names(hansenfit$savedshifts),otree$nodes)]<-1:length(hansenfit$savedshifts)

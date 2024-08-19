@@ -10,7 +10,7 @@ function(otree, odata, oldshifts, oldaic, oldfit, alloldaic=NULL, exclude=NULL, 
 	aics<-LnLs<-rep(NA,length(nodes));names(aics)<-names(LnLs)<-nodes
 	shifts<-character(length(nodes))
 	fits<-list()
-	if(class(oldfit)!="list")oldfit<-list(oldfit)
+	if(!inherits(oldfit,"list"))oldfit<-list(oldfit)
 	
 	oldalphas<-sapply(oldfit,function(x)summary(x)$alpha)
 	oldsigmas<-sapply(oldfit,function(x)summary(x)$sigma)
@@ -39,7 +39,7 @@ for(i in 2:length(nodes)){
 
 	if(error_skip){
 		te<-try( fits[[i]]<-apply(odata2,2,function(x)hansen(x[-c(1,2)],otree,regimes=tempregs,sqrt.alpha=sqrt(x[1]),sigma=sqrt(x[2]))) )
-		if(class(te)=="try-error"){
+		if(inherits(te,"try-error")){
 			print(paste("error fitting regime",i),quote=F)
 			LnLs[i]<-NA;aics[i]<-aic_threshold+9999
 		}else{

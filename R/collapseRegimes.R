@@ -23,7 +23,7 @@ for(i in 1:kk){
 	tempregs<-repaint(otree,regshifts=tempshifts)
 	if(error_skip){
 		te<-try( tempfit<-apply(odata2,2,function(x)hansen(x[-c(1,2)],otree,regimes=tempregs,sqrt.alpha=sqrt(x[1]),sigma=sqrt(x[2]))) )
-		if(class(te)=="try-error"){
+		if(inherits(te,"try-error")){
 			print(paste("error fitting regimes",i,"and",j),quote=F)
 			tempaic<-aic_threshold+1
 		}else{

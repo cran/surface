@@ -3,7 +3,7 @@ function(phy,type="BM",param=0,n_traits=NULL,dat=NULL,vcv=NULL,hansenfit=NULL, s
 
 if(type%in%c("BM","hansen-paint","hansen-fit")==F)stop("`type` must be `BM`, `hansen-paint` or `hansen-fit`")
 
-ntaxa<-ifelse(class(phy)=="phylo",length(phy$tip.label),phy@nterm)
+ntaxa<-ifelse(inherits(phy,"phylo"),length(phy$tip.label),phy@nterm)
 
 if(type=="BM"){
 	
@@ -51,9 +51,9 @@ if(type=="BM"){
 
 }else if(type=="hansen-fit"){
 
-	if(class(hansenfit)=="hansentree"){
+	if(inherits(hansenfit,"hansentree")){
 		n_traits<-1
-	}else if(class(hansenfit[[1]])=="hansentree"){
+	}else if(inherits(hansenfit[[1]],"hansentree")){
 		n_traits<-length(hansenfit)
 	}else{
 		stop("for type=`hansen-fit`, object `hansenfit` must either be a fitted hansentree object or a list of such objects (e.g. the `fit` component of a SURFACE output)")
@@ -84,7 +84,7 @@ if(sample_optima){
 		}
 	}
 if(!is.null(optima)){
-	if(class(optima)[1]!="matrix")optima<-matrix(optima,ncol=1)
+	if(!inherits(optima,"matrix"))optima<-matrix(optima,ncol=1)
 	if(dim(optima)[1]!=n_regimes)stop("If setting optima must either sample or set `n_regime`")
 	for(i in 1:length(tempfit))tempfit[[i]]@theta[[1]]<-optima[,i]
 	}
@@ -96,8 +96,8 @@ Letters<-c(letters,paste("z",letters,sep=""),paste("zz",letters,sep=""),paste("z
 if(!is.null(dat))n_traits<-dim(dat)[2]
 if(is.null(n_traits))n_traits<-1
 
-if(class(phy)%in%c("phylo","ouchtree")==FALSE)stop("`phy` must either be a `phylo` object or an `ouchtree` object")
-if(class(phy)=="phylo"){
+if(!inherits(phy,c("phylo","ouchtree")))stop("`phy` must either be a `phylo` object or an `ouchtree` object")
+if(inherits(phy,"phylo")){
 	if(is.null(dat))dat<-as.data.frame(matrix(rnorm(n_traits*ntaxa),ncol=n_traits,dimnames=list(phy$tip.label,NULL)))
 	olist<-convertTreeData(phy,dat) 
 	otree<-olist[[1]];odata<-olist[[2]]
@@ -182,7 +182,7 @@ if(is.null(optima)){
 #	for(i in 1:n_traits)optima[,i]<-sample(seq(optima_distrib[1]-optima_distrib[2]/2,optima_distrib[1]+optima_distrib[2]/2,length.out=n_regimes))
 		}
 	}else{
-		if(class(optima)[1]!="matrix")optima<-matrix(optima,ncol=1)
+		if(!inherits(optima,"matrix"))optima<-matrix(optima,ncol=1)
 		if(any(dim(optima)!=c(n_regimes,n_traits)))stop("Optima must be provided as a matrix with dimensions [n_regimes, n_traits]")
 		}
 
@@ -193,10 +193,10 @@ for(i in 1:length(tempfit))tempfit[[i]]@theta$x[]<-optima[,i]
 if(type%in%c("hansen-paint","hansen-fit")){
 	simdat<-as.data.frame(matrix(unlist(sapply(tempfit,simulate)),ncol=n_traits))
 	#added this switch so ouchtree or phylo trees could both be used
-#	if(class(phy)=="ouchtree"){
+#	if(inherits(phy,"ouchtree")){
 #		rownames(simdat)<-as(otree,"data.frame")$labels[
 #	}else{
-	if(class(phy)=="phylo"){
+	if(inherits(phy,"phylo")){
 		simdat<-simdat[match(phy$tip.label,as(otree,"data.frame")$labels),,drop=F]
 		rownames(simdat)<-phy$tip.label
 	}

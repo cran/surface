@@ -1,21 +1,21 @@
 propRegMatch <-
 function(fit1,fit2,internal=FALSE){
 
-if(class(fit1)=="list")fit1<-fit1[[1]]
-if(class(fit2)=="list")fit2<-fit2[[1]]
+if(inherits(fit1,"list"))fit1<-fit1[[1]]
+if(inherits(fit2,"list"))fit2<-fit2[[1]]
 
 if(internal){ 
 	fit1<-as(fit1,"data.frame")[,5,drop=F];fit2<-as(fit2,"data.frame")[,5,drop=F]
 	n<-dim(fit1)[1]
 }else{
-	if(class(fit1)%in%c("character","factor"))fit1<-data.frame(regs=fit1)
-	if(class(fit1)=="hansentree"){
+	if(inherits(fit1,c("character","factor")))fit1<-data.frame(regs=fit1)
+	if(inherits(fit1,"hansentree")){
 		fit1<-as(fit1,"data.frame")
 		tips<-((dim(fit1)[1]+1)/2):dim(fit1)[1];n<-length(tips)
 		fit1<-data.frame(regs=fit1[tips,5],row.names=fit1$labels[tips])
 		}
-	if(class(fit2)%in%c("character","factor"))fit2<-data.frame(regs=fit2)
-	if(class(fit2)=="hansentree"){
+	if(inherits(fit2,c("character","factor")))fit2<-data.frame(regs=fit2)
+	if(inherits(fit2,"hansentree")){
 		fit2<-as(fit2,"data.frame")
 		tips<-((dim(fit2)[1]+1)/2):dim(fit2)[1];n<-length(tips)
 		fit2<-data.frame(regs=fit2[tips,5],row.names=fit2$labels[tips])
